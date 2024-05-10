@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Spline+Sans+Mono:ital,wght@0,300..700;1,300..700&display=swap');
+
+:root {
+  --node-width: 54px;
+  --gap: 8px;
+}
+
+* {
+  font-family: 'Spline Sans Mono';
+  margin: 0;
+}
+
+body {
+  background-color: rgb(33, 33, 33);
+  color: white;
+  width: calc(100vw - 16px);
+  height: calc(100vh - 16px);
+  margin: 8px;
+}
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid white; */
+}
+
+.title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-top: 30px;
+  text-align: center;
+}
+
+.node-container {
+  flex-grow: 1;
+  max-width: 90%;
+  min-height: calc(calc(3 * var(--node-width)) + calc(2 * var(--gap)));
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  overflow-x: scroll;
+  /* border: 1px solid white; */
+}
+
+.node-container::-webkit-scrollbar {
+  display: none;
+}
+
+.node-container {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.node {
+  display: flex;
+  align-items: center;
+  position: relative;
+  top: 0;
+}
+
+.data {
+  background-color: white;
+  color: black;
+  width: var(--node-width);
+  height: var(--node-width);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#head {
+  background-color: transparent;
+  color: white;
+  width: calc(var(--node-width) - 4px);
+  height: calc(var(--node-width) - 4px);
+  border: 2px solid white;
+}
+
+.arrow {
+  width: 30px;
+}
+
+.show-operations {
+  height: 100px;
+  margin-bottom: 30px;
+}
+
+.options-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.option-menu {
+  height: 1.5rem;
+  width: 130px;
+  border-radius: 2px;
+  padding: 0 8px;
+  cursor: pointer;
+}
+
+.operations-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.operations-container > * {
+  display: none;
+}
+
+#insertion,
+#deletion {
+  width: 100%;
+}
+
+.displayBlock {
+  display: block;
+}
+
+.operation-menu {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-input {
+  margin-bottom: 12px;
+}
+
+.operation-menu button {
+  background-color: white;
+  color: black;
+  height: 1.5rem;
+  padding: 0 8px;
+  border: 1px solid white;
+  border-radius: 2px;
+  transition: all 0.15s;
+  cursor: pointer;
+}
+
+.get-data,
+.get-position {
+  border: none;
+  border-radius: 2px;
+  height: 1.5rem;
+  padding: 0 8px;
+  cursor: pointer;
+}
+
+.get-data {
+  width: 90px;
+}
+
+.index-input {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+}
+
+.get-position {
+  width: 65px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.get-position ~ .confirm {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+}
+
+.get-position ~ .confirm img{
+  width: 16px;
+}

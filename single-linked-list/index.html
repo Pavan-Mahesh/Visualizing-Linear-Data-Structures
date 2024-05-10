@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation</title>
+
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="container">
+      <p class="title">
+        Single Linked List
+      </p>
+
+      <div class="node-container">
+        <div class="node">
+          <div class="data" id="head">Head</div>
+          <img class="arrow" src="arrow.svg" alt=" > ">
+        </div>
+        <div class="node">
+          <div class="data" id="null">Null</div>
+        </div>
+      </div>
+      
+      <div class="show-operations">
+        <div class="options-container">
+          <label>Select an operation</label>
+          <select class="option-menu">
+            <option id="default">--select--</option>
+            <option id="insert">Insert</option>
+            <option id="delete">Delete</option>
+          </select>
+        </div>
+
+        <div class="operations-container">
+          <div id="insertion">
+            <div class="user-input">
+              <lable>Data</lable>
+              <input class="get-data" type="text" placeholder="Enter value">
+            </div>
+            <div class="operation-menu">
+              <button id="add-first-btn">Beginning</button>
+              <button id="add-last-btn">End</button>
+              <div class="index-input">
+                <input class="get-position" type="text" placeholder="Position">
+                <button class="confirm">
+                  <img src="confirm.svg" alt="confirm">
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div id="deletion">
+            <div class="operation-menu">
+              <button id="remove-first-btn">Beginning</button>
+              <button id="remove-last-btn">End</button>
+              <div class="index-input">
+                <input class="get-position" type="text" placeholder="Position">
+                <button class="confirm">
+                  <img src="confirm.svg" alt="confirm">
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script src="js/general.js"></script>
+  </body>
+</html>
