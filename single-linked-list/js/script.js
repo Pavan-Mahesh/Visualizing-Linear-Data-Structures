@@ -7,7 +7,7 @@ function addElem(addIdx) {
   node.classList.add('node');
   node.innerHTML = `
     <div class="data">${parseInt(getData.value)}</div>
-    <img class="arrow" src="arrow.svg" alt=" > ">`;
+    <img class="arrow" src="images/pointer.svg" alt=" > ">`;
   node.style.width = '0';
   node.style.opacity = '0';
   node.style.top = -62 + 'px';
@@ -173,23 +173,6 @@ function removeElem(removeIdx) {
       node.style.width = (84 - (count * (84 / turns))) + 'px';
     }, 10);
   }
-}
-
-function highlightNodes(limit) {
-  nodes[0].firstElementChild.classList.add('highlight');
-  let count = 1;
-  const intervalId = setInterval(() => {
-    if(!(count < limit)){
-      clearInterval(intervalId);
-      count = 1;
-      return;
-    }
-    nodes[count].firstElementChild.classList.add('highlight');
-    count++;
-  }, 1000);
-
-  for(let i = 0; i < limit; i++)
-    nodes[i].firstElementChild.classList.remove('highlight');
 }
 
 function disableButtons(btns) {

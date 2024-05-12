@@ -1,16 +1,16 @@
 const nodes = document.querySelector('.node-container').children;
 
-const getData = document.querySelector('.get-data');
-getData.addEventListener('input', (event) => {
-  allowOnlyNumber(event, 1, 100);
-});
-
 const optionMenu = document.querySelector('.option-menu');
 optionMenu.addEventListener('change', event => {
   const first = event.target.firstElementChild;
   if(first.id === 'default')
     first.remove();
   showOperations(event.target.value);
+});
+
+const getData = document.querySelector('.get-data');
+getData.addEventListener('input', (event) => {
+  allowOnlyNumber(event, 1, 100);
 });
 
 const getPosition = document.querySelectorAll('.get-position');
@@ -26,10 +26,7 @@ insertBtns[0].addEventListener('click', () => {
   addElem(1); // element before index 1
 });
 insertBtns[1].addEventListener('click', () => {
-  highlightNodes(nodes.length - 1);
-  setTimeout(() => {
-    addElem(nodes.length - 1); // element before index n - 1
-  }, (nodes.length - 1) * 1000);
+  addElem(nodes.length - 1); // element before index n - 1
 });
 insertBtns[2].addEventListener('click', () => {
   addElem(parseInt(getPosition[0].value));
@@ -51,17 +48,17 @@ deleteBtns[2].addEventListener('click', () => {
 function showOperations(option) {
   switch(option) {
     case 'Insert': 
-      displayNone(0);
+      displayOperations(0);
       break;
     case 'Delete': 
-      displayNone(1);
+      displayOperations(1);
       break;
   }
 
-  function displayNone(index) {
+  function displayOperations(showIdx) {
     const operationMenu = document.querySelector('.operations-container').children;
     for(let i = 0; i < operationMenu.length; i++) {
-      if(i === index && !operationMenu[i].classList.contains('displayBlock'))
+      if(i === showIdx && !operationMenu[i].classList.contains('displayBlock'))
         operationMenu[i].classList.add('displayBlock');
       else if(operationMenu[i].classList.contains('displayBlock'))
         operationMenu[i].classList.remove('displayBlock');
