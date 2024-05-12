@@ -5,13 +5,13 @@ getData.addEventListener('input', (event) => {
   allowOnlyNumber(event, 1, 100);
 });
 
-document.querySelector('.option-menu')
-  .addEventListener('change', event => {
-    const first = event.target.firstElementChild;
-    if(first.id === 'default')
-      first.remove();
-    showOperations(event.target.value);
-  });
+const optionMenu = document.querySelector('.option-menu');
+optionMenu.addEventListener('change', event => {
+  const first = event.target.firstElementChild;
+  if(first.id === 'default')
+    first.remove();
+  showOperations(event.target.value);
+});
 
 const getPosition = document.querySelectorAll('.get-position');
 getPosition[0].addEventListener('input', (event) => {
@@ -26,7 +26,10 @@ insertBtns[0].addEventListener('click', () => {
   addElem(1); // element before index 1
 });
 insertBtns[1].addEventListener('click', () => {
-  addElem(nodes.length - 1); // element before index n - 1
+  highlightNodes(nodes.length - 1);
+  setTimeout(() => {
+    addElem(nodes.length - 1); // element before index n - 1
+  }, (nodes.length - 1) * 1000);
 });
 insertBtns[2].addEventListener('click', () => {
   addElem(parseInt(getPosition[0].value));

@@ -28,7 +28,8 @@ body {
 }
 
 .title {
-  font-size: 32px;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: clamp(36px, 8vw, 64px);
   font-weight: bold;
   margin-top: 30px;
   text-align: center;
@@ -42,6 +43,7 @@ body {
   justify-content: start;
   align-items: center;
   overflow-x: scroll;
+  padding: 0 10px;
   /* border: 1px solid white; */
 }
 
@@ -72,6 +74,19 @@ body {
   align-items: center;
 }
 
+.highlight {
+  animation: highlight-node 1s ease-in;
+}
+
+@keyframes highlight-node {
+  0%, 100% {
+    outline: 0px solid rgba(255, 255, 255, 0.6)
+  }
+  50% {
+    outline: 8px solid rgba(255, 255, 255, 0.6)
+  }
+}
+
 #head {
   background-color: transparent;
   color: white;
@@ -85,8 +100,7 @@ body {
 }
 
 .show-operations {
-  height: 100px;
-  margin-bottom: 30px;
+  height: 130px;
 }
 
 .options-container {
@@ -97,6 +111,8 @@ body {
 }
 
 .option-menu {
+  background-color: white;
+  color: black;
   height: 1.5rem;
   width: 130px;
   border-radius: 2px;

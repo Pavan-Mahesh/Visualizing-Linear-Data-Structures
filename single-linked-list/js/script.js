@@ -18,24 +18,23 @@ function addElem(addIdx) {
 
 
   function makeSpaceAnimate() {
-    const intervalId = setInterval(makeSpace, 10);
     let count = 0;
-    function makeSpace() {
-      if(count === 30) {
+    const turns = 30;
+    const intervalId = setInterval(() => {
+      if(count === turns) {
         clearInterval(intervalId);
         fadeInAnimate();
         return;
       }
       count++;          
-      node.style.width = (count * (84 / 30)) + 'px';
-    }
+      node.style.width = (count * (84 / turns)) + 'px';
+    }, 10);
   }
 
   function fadeInAnimate() {
-    const intervalId = setInterval(fadeIn, 10);
     const turns = 20;
     let count = 0;
-    function fadeIn() {
+    const intervalId = setInterval(() => {
       if(count === turns) {
         clearInterval(intervalId);
         pointerDownAnimation();
@@ -43,14 +42,13 @@ function addElem(addIdx) {
       }
       count++;
       node.style.opacity = count * (10 / turns); // 10 represents the full opacity
-    }
+    }, 10);
   }
 
   function pointerDownAnimation() {
-    const intervalId = setInterval(pointDown, 10);
     const turns = 25;
     let count = 0;
-    function pointDown() {
+    const intervalId = setInterval(() => {
       if(count === turns) {
         clearInterval(intervalId);
         setTimeout(pointerUpAnimation, 300)
@@ -60,13 +58,12 @@ function addElem(addIdx) {
       let translate = count * (31 / turns);
       let rotate = count * (40 / turns);
       node.lastElementChild.style.transform = `translateY(${translate}px) rotateZ(${rotate}deg)`;
-    }
+    }, 10);
   }
   function pointerUpAnimation() {
-    const intervalId = setInterval(pointUp, 10);
     const turns = 25;
     let count = 0;
-    function pointUp() {
+    const intervalId = setInterval(() => {
       if(count === turns) {
         clearInterval(intervalId);
         setTimeout(moveDownAnimation, 300);
@@ -76,15 +73,13 @@ function addElem(addIdx) {
       const translate = count * (31 / turns);
       const rotate = count * (40 / turns);
       prev.lastElementChild.style.transform = `translateY(-${translate}px) rotateZ(-${rotate}deg)` 
-    }
+    }, 10);
   }
   
   function moveDownAnimation() {
-    const intervalId = setInterval(moveDown, 10);
     const turns = 30;
     let count = 0;
-    function moveDown() {
-      // since compare to all reverse rotation takes move time
+    const intervalId = setInterval(() => {
       if(count === turns){
         clearInterval(intervalId);
         prev.lastElementChild.removeAttribute('style');
@@ -100,7 +95,7 @@ function addElem(addIdx) {
       node.style.top = (-62 - removeTop) + 'px';
       prev.lastElementChild.style.transform = `translateY(${-31 + translate}px) rotateZ(${-40  + rotate}deg)`;
       node.lastElementChild.style.transform = `translateY(${31 - translate}px) rotateZ(${40 - rotate}deg)`;
-    }
+    }, 10);
   }
 }
 
@@ -114,10 +109,9 @@ function removeElem(removeIdx) {
   moveUpAnimation();
 
   function moveUpAnimation() {
-    const intervalId = setInterval(moveUp, 10);
     const turns = 30;
     let count = 0;
-    function moveUp() {
+    const intervalId = setInterval(() => {
       if(count === turns){
         clearInterval(intervalId);
         setTimeout(neutralAnimation, 300);
@@ -130,14 +124,13 @@ function removeElem(removeIdx) {
       node.style.top = addTop + 'px';
       prev.lastElementChild.style.transform = `translateY(-${translate}px) rotateZ(-${rotate}deg)`;
       node.lastElementChild.style.transform = `translateY(${translate}px) rotateZ(${rotate}deg)`;
-    }
+    }, 10);
   }
 
   function neutralAnimation() {
-    const intervalId = setInterval(neutral, 10);
     const turns = 25;
     let count = 0;
-    function neutral() {
+    const intervalId = setInterval(() => {
       if(count === turns) {
         clearInterval(intervalId);
         prev.lastElementChild.removeAttribute('style');
@@ -149,14 +142,13 @@ function removeElem(removeIdx) {
       let rotate = count * (40 / turns);
       prev.lastElementChild.style.transform = `translateY(-${31 - translate}px) rotateZ(-${40 - rotate}deg)`;
       node.lastElementChild.style.transform = `translateY(${31 - translate}px) rotateZ(${40 - rotate}deg)`;
-    }
+    }, 10);
   }
   
   function fadeOutAnimate() {
-    const intervalId = setInterval(fadeOut, 10);
     const turns = 20;
     let count = 10;
-    function fadeOut() {
+    const intervalId = setInterval(() => {
       if(count === turns){
         clearInterval(intervalId);
         collapseAnimate();
@@ -164,14 +156,13 @@ function removeElem(removeIdx) {
       }
       count++;
       node.style.opacity = 10 - (count * (10 / turns));
-    }
+    }, 10);
   }
 
   function collapseAnimate() {
-    const intervalId = setInterval(collapse, 10);
     const turns = 25;
     let count = 0;
-    function collapse() {
+    const intervalId = setInterval(() => {
       if(count === turns) {
         node.remove();
         clearInterval(intervalId);
@@ -180,17 +171,36 @@ function removeElem(removeIdx) {
       }
       count++;          
       node.style.width = (84 - (count * (84 / turns))) + 'px';
-    }
+    }, 10);
   }
 }
 
+function highlightNodes(limit) {
+  nodes[0].firstElementChild.classList.add('highlight');
+  let count = 1;
+  const intervalId = setInterval(() => {
+    if(!(count < limit)){
+      clearInterval(intervalId);
+      count = 1;
+      return;
+    }
+    nodes[count].firstElementChild.classList.add('highlight');
+    count++;
+  }, 1000);
+
+  for(let i = 0; i < limit; i++)
+    nodes[i].firstElementChild.classList.remove('highlight');
+}
+
 function disableButtons(btns) {
+  optionMenu.disabled = true;
   btns.forEach(btn => {
     btn.disabled = true;
   })
 }
 
 function enableButtons(btns) {
+  optionMenu.disabled = false;
   btns.forEach(btn => {
     btn.disabled = false;
   })
