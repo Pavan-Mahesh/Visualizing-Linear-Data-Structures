@@ -1,7 +1,3 @@
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
-<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="SVGRepo_bgCarrier" stroke-width="0"/>
-<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
-<g id="SVGRepo_iconCarrier"> <path d="M5.08884 9.2945C5.26942 9.72155 5.69482 10 6.16669 10H9V21C9 21.5523 9.44772 22 10 22H14C14.5523 22 15 21.5523 15 21V10H17.8333C18.3052 10 18.7306 9.72155 18.9112 9.2945C19.0917 8.86744 18.9919 8.37588 18.6583 8.04902L12.825 2.33474C12.3693 1.88842 11.6307 1.88842 11.175 2.33474L5.34174 8.04902C5.00808 8.37588 4.90826 8.86744 5.08884 9.2945Z" fill="#ffffff"/> </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-0.255006 -45.5129 36.02 45.51">
+	<path d="M 14.739 -44.275 L 0.675 -30.211 c -0.909 0.909 -1.18 2.275 -0.687 3.463 c 0.493 1.188 1.654 1.959 2.938 1.956 l 5.903 -0.015 l 0.054 21.64 C 8.887 -1.414 10.312 0.004 12.065 0 l 11.522 -0.028 c 0.842 -0.002 1.648 -0.338 2.242 -0.935 s 0.927 -1.405 0.925 -2.247 l -0.054 -21.64 l 5.899 -0.014 c 1.286 -0.004 2.442 -0.781 2.931 -1.971 c 0.487 -1.189 0.21 -2.557 -0.703 -3.46 L 20.694 -44.29 C 19.043 -45.926 16.381 -45.92 14.739 -44.275 z" fill="#ffffff"/>
+</svg>

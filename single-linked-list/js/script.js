@@ -18,8 +18,8 @@ function addElem(addIdx) {
 
 
   function makeSpaceAnimate() {
-    let count = 0;
     const turns = 30;
+    let count = 0;
     const intervalId = setInterval(() => {
       if(count === turns) {
         clearInterval(intervalId);
@@ -32,7 +32,7 @@ function addElem(addIdx) {
   }
 
   function fadeInAnimate() {
-    const turns = 20;
+    const turns = 30;
     let count = 0;
     const intervalId = setInterval(() => {
       if(count === turns) {
@@ -146,7 +146,7 @@ function removeElem(removeIdx) {
   }
   
   function fadeOutAnimate() {
-    const turns = 20;
+    const turns = 30;
     let count = 10;
     const intervalId = setInterval(() => {
       if(count === turns){
@@ -174,6 +174,24 @@ function removeElem(removeIdx) {
     }, 10);
   }
 }
+
+function traversalArrow() {
+  const arrow = document.querySelector('.single-linked-list .traversal-arrow');
+  fadeIn();
+
+  function fadeIn() {
+    const turns = 30;
+    let count = 0;
+    const intervalId = setInterval(() => {
+      if(count === turns) {
+        clearInterval(intervalId);
+      }
+      count++;
+      arrow.style.opacity = count * (10 / turns);
+    }, 10)
+  }
+}
+setTimeout(traversalArrow, 1000)
 
 function disableButtons(btns) {
   optionMenu.disabled = true;
