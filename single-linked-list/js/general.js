@@ -30,7 +30,6 @@ insertBtns[1].addEventListener('click', () => {
 });
 insertBtns[2].addEventListener('click', () => {
   addElem(parseInt(getPosition[0].value));
-  getPosition[0].value = '';
 });
 
 const deleteBtns = document.querySelectorAll('#deletion button');
@@ -42,7 +41,6 @@ deleteBtns[1].addEventListener('click', () => {
 });
 deleteBtns[2].addEventListener('click', () => {
   removeElem(parseInt(getPosition[1].value));
-  getPosition[1].value = '';
 });
 
 function showOperations(option) {
