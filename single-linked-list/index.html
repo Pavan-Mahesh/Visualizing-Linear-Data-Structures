@@ -17,21 +17,23 @@
         <div class="node-container">
           <div class="node">
             <div class="data" id="head">Head</div>
-            <img class="arrow" src="images/pointer.svg" alt=" > ">
+            <img class="pointer" src="images/pointer.svg" alt=" > ">
           </div>
           <div class="node">
             <div class="data" id="null">Null</div>
           </div>
         </div>
+        <div class="notes"></div>
       </div>
       
       <div class="show-operations">
         <div class="options-container">
           <label>Select an operation</label>
           <select class="option-menu">
-            <option id="default">--select--</option>
+            <option id="default">-select-</option>
             <option id="insert">Insert</option>
             <option id="delete">Delete</option>
+            <option id="search">Search</option>
           </select>
         </div>
 
@@ -46,8 +48,8 @@
               <button id="add-last-btn">End</button>
               <div class="index-input">
                 <input class="get-position" type="text" placeholder="Position">
-                <button class="confirm">
-                  <img src="images/confirm.svg" alt="confirm">
+                <button class="confirm-button">
+                  <img class="confirm-icon" src="images/confirm.svg" alt="confirm">
                 </button>
               </div>
             </div>
@@ -59,8 +61,19 @@
               <button id="remove-last-btn">End</button>
               <div class="index-input">
                 <input class="get-position" type="text" placeholder="Position">
-                <button class="confirm">
-                  <img src="images/confirm.svg" alt="confirm">
+                <button class="confirm-button">
+                  <img class="confirm-icon" src="images/confirm.svg" alt="confirm">
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div id="search">
+            <div class="operation-menu">
+              <div class="index-input">
+                <input class="get-key" type="text" placeholder="Key value">
+                <button class="confirm-button">
+                  <img class="confirm-icon" src="images/confirm.svg" alt="confirm">
                 </button>
               </div>
             </div>

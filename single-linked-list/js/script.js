@@ -8,14 +8,19 @@ function addElem(addIdx) {
   if(getData.value === '')
     return;
 
+  const notes = document.querySelector('.notes');
+  notes.innerText = `Inserting node at position ${addIdx}`;
+
   getData.disabled = true;
+  getPosition[0].value = addIdx;
   getPosition[0].disabled = true;
   disableButtons(insertBtns);
   const node = document.createElement('div');
   node.classList.add('node');
   node.innerHTML = `
-    <div class="data">${parseInt(getData.value)}</div>
-    <img class="arrow" src="images/pointer.svg" alt=" > ">`;
+    <div class="data">${getData.value}</div>
+    <div class="position">pos ${addIdx}</div>
+    <img class="pointer" src="images/pointer.svg" alt=" > ">`;
   node.style.width = '0';
   node.style.transform = 'scale(0)';
   node.style.transformOrigin = `${DATA_WIDTH / 2}px ${DATA_WIDTH / 2}px`
@@ -26,6 +31,9 @@ function addElem(addIdx) {
   highlightNodeAnimation();
 
   function highlightNodeAnimation() {
+    const posElem = document.createElement('div');
+    posElem.classList.add('position');
+
     const turns = 100;
     let count = 0;
     let pos = 1;
@@ -36,8 +44,12 @@ function addElem(addIdx) {
         return;
       } else if(count === turns) {
         count = 0;
+        nodes[pos].lastElementChild.remove();
         pos++;
         return;
+      } if (count === 0) {
+        posElem.innerText = `pos ${pos}`;
+        nodes[pos].appendChild(posElem);
       }
       count++;
       let outline;
@@ -50,7 +62,7 @@ function addElem(addIdx) {
   }
 
   function makeSpaceAnimate() {
-    const turns = 40;
+    const turns = 30;
     let count = 0;
     const intervalId = setInterval(() => {
       if(count === turns) {
@@ -73,7 +85,7 @@ function addElem(addIdx) {
         return;
       }
       count++;
-      node.style.transform = `scale(${count * (1 / turns)})`;
+      node.style.transform = `scale(${count * (0.99 / turns)})`;
     }, 10);
   }
 
@@ -92,6 +104,7 @@ function addElem(addIdx) {
       node.lastElementChild.style.transform = `translateY(${translate}px) rotateZ(${rotate}deg)`;
     }, 10);
   }
+
   function pointerUpAnimation() {
     const turns = 25;
     let count = 0;
@@ -114,8 +127,10 @@ function addElem(addIdx) {
     const intervalId = setInterval(() => {
       if(count === turns){
         clearInterval(intervalId);
+        notes.innerText = `Inserted ${getData.value} at position ${addIdx}`;
         prev.lastElementChild.removeAttribute('style');
         node.removeAttribute('style');
+        node.removeChild(node.children[1]);
         node.lastElementChild.removeAttribute('style');
         getData.disabled = false;
         getData.value = '';
@@ -139,6 +154,10 @@ function removeElem(removeIdx) {
   if(nodes.length === 2)
     return;
 
+  const notes = document.querySelector('.notes');
+  notes.innerText = `Deleting node from position ${removeIdx}`;
+
+  getPosition[1].value = removeIdx;
   getPosition[1].disabled = true;
   disableButtons(deleteBtns);
   const node = nodes[removeIdx];
@@ -147,6 +166,9 @@ function removeElem(removeIdx) {
   highlightNodeAnimation();
 
   function highlightNodeAnimation() {
+    const posElem = document.createElement('div');
+    posElem.classList.add('position');
+
     const turns = 100;
     let count = 0;
     let pos = 1;
@@ -157,8 +179,12 @@ function removeElem(removeIdx) {
         return;
       } else if(count === turns) {
         count = 0;
+        nodes[pos].lastElementChild.remove();
         pos++;
         return;
+      } if (count === 0) {
+        posElem.innerText = `pos ${pos}`;
+        nodes[pos].appendChild(posElem);
       }
       count++;
       let outline;
@@ -237,10 +263,11 @@ function removeElem(removeIdx) {
   }
 
   function collapseAnimate() {
-    const turns = 40;
+    const turns = 30;
     let count = 0;
     const intervalId = setInterval(() => {
       if(count === turns) {
+        notes.innerText = `Deleted ${node.firstElementChild.innerText} from position ${removeIdx}`;
         node.remove();
         clearInterval(intervalId);
         getPosition[1].disabled = false;
@@ -252,6 +279,53 @@ function removeElem(removeIdx) {
       node.style.width = (NODE_WIDTH - (count * (NODE_WIDTH / turns))) + 'px';
     }, 10);
   }
+}
+
+function searchElem(keyValue) {
+  if(getKey.value === '')
+    return;
+
+  const notes = document.querySelector('.notes');
+  notes.innerText = `Searching for key: ${getKey.value}`;
+  getKey.disabled = true;
+  const posElem = document.createElement('div');
+  posElem.classList.add('position');
+
+  const turns = 100;
+  let count = 0;
+  let pos = 1;
+  const intervalId = setInterval(() => {
+    if(pos === nodes.length - 1) {
+      clearInterval(intervalId);
+      notes.innerHTML = `Key: ${keyValue} is not found`;
+      getKey.value = '';
+      getKey.disabled = false;
+      return;
+    } else if(count === turns) {
+      if(nodes[pos].firstElementChild.innerText === keyValue) {
+        clearInterval(intervalId);
+        notes.innerHTML = `Key: ${keyValue} is found at position ${pos}`; 
+        nodes[pos].lastElementChild.remove();
+        getKey.value = '';
+        getKey.disabled = false;
+        return;
+      }
+      count = 0;
+      nodes[pos].lastElementChild.remove();
+      pos++;
+      return;
+    } if (count === 0) {
+      posElem.innerText = `pos ${pos}`;
+      nodes[pos].appendChild(posElem);
+    }
+    count++;
+    let outline;
+    if(count <= (turns / 2))
+      outline = count * (OUTLINE / turns);
+    else
+      outline = OUTLINE - (count * (OUTLINE / turns));
+    nodes[pos].firstElementChild.style.outlineWidth = outline + 'px';
+  }, 10);
 }
 
 function disableButtons(btns) {
