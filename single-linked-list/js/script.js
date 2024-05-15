@@ -5,9 +5,6 @@ const ROTATE = 36;
 const OUTLINE = 20;
 
 function addElem(addIdx) {
-  if(getData.value === '')
-    return;
-
   const notes = document.querySelector('.notes');
   notes.innerText = `Inserting node at position ${addIdx}`;
 
@@ -19,8 +16,9 @@ function addElem(addIdx) {
   node.classList.add('node');
   node.innerHTML = `
     <div class="data">${getData.value}</div>
-    <div class="position">pos ${addIdx}</div>
-    <img class="pointer" src="images/pointer.svg" alt=" > ">`;
+    <div class="position"></div>
+    <img class="pointer" src="images/pointer.svg" alt=">">
+  `;
   node.style.width = '0';
   node.style.transform = 'scale(0)';
   node.style.transformOrigin = `${DATA_WIDTH / 2}px ${DATA_WIDTH / 2}px`
@@ -31,10 +29,7 @@ function addElem(addIdx) {
   highlightNodeAnimation();
 
   function highlightNodeAnimation() {
-    const posElem = document.createElement('div');
-    posElem.classList.add('position');
-
-    const turns = 100;
+    const turns = 50;
     let count = 0;
     let pos = 1;
     const intervalId = setInterval(() => {
@@ -44,12 +39,8 @@ function addElem(addIdx) {
         return;
       } else if(count === turns) {
         count = 0;
-        nodes[pos].lastElementChild.remove();
         pos++;
         return;
-      } if (count === 0) {
-        posElem.innerText = `pos ${pos}`;
-        nodes[pos].appendChild(posElem);
       }
       count++;
       let outline;
@@ -62,7 +53,7 @@ function addElem(addIdx) {
   }
 
   function makeSpaceAnimate() {
-    const turns = 30;
+    const turns = 25;
     let count = 0;
     const intervalId = setInterval(() => {
       if(count === turns) {
@@ -76,7 +67,7 @@ function addElem(addIdx) {
   }
 
   function scaleInAnimate() {
-    const turns = 30;
+    const turns = 25;
     let count = 0;
     const intervalId = setInterval(() => {
       if(count === turns) {
@@ -90,7 +81,7 @@ function addElem(addIdx) {
   }
 
   function pointerDownAnimation() {
-    const turns = 25;
+    const turns = 20;
     let count = 0;
     const intervalId = setInterval(() => {
       if(count === turns) {
@@ -106,11 +97,15 @@ function addElem(addIdx) {
   }
 
   function pointerUpAnimation() {
-    const turns = 25;
+    const turns = 20;
     let count = 0;
     const intervalId = setInterval(() => {
       if(count === turns) {
         clearInterval(intervalId);
+        node.children[1].innerText = `pos ${addIdx}`;
+        for(let i = addIdx + 1; i < nodes.length - 1; i++) {
+          nodes[i].children[1].innerText = `pos ${i}`;
+        }
         setTimeout(moveDownAnimation, 300);
         return;
       }
@@ -122,7 +117,7 @@ function addElem(addIdx) {
   }
   
   function moveDownAnimation() {
-    const turns = 30;
+    const turns = 25;
     let count = 0;
     const intervalId = setInterval(() => {
       if(count === turns){
@@ -130,7 +125,6 @@ function addElem(addIdx) {
         notes.innerText = `Inserted ${getData.value} at position ${addIdx}`;
         prev.lastElementChild.removeAttribute('style');
         node.removeAttribute('style');
-        node.removeChild(node.children[1]);
         node.lastElementChild.removeAttribute('style');
         getData.disabled = false;
         getData.value = '';
@@ -151,10 +145,11 @@ function addElem(addIdx) {
 }
 
 function removeElem(removeIdx) {
-  if(nodes.length === 2)
-    return;
-
   const notes = document.querySelector('.notes');
+  if(nodes.length === 2){
+    notes.innerText = `Linked list is empty`;
+    return;
+  }
   notes.innerText = `Deleting node from position ${removeIdx}`;
 
   getPosition[1].value = removeIdx;
@@ -166,10 +161,7 @@ function removeElem(removeIdx) {
   highlightNodeAnimation();
 
   function highlightNodeAnimation() {
-    const posElem = document.createElement('div');
-    posElem.classList.add('position');
-
-    const turns = 100;
+    const turns = 50;
     let count = 0;
     let pos = 1;
     const intervalId = setInterval(() => {
@@ -179,12 +171,8 @@ function removeElem(removeIdx) {
         return;
       } else if(count === turns) {
         count = 0;
-        nodes[pos].lastElementChild.remove();
         pos++;
         return;
-      } if (count === 0) {
-        posElem.innerText = `pos ${pos}`;
-        nodes[pos].appendChild(posElem);
       }
       count++;
       let outline;
@@ -197,12 +185,12 @@ function removeElem(removeIdx) {
   }
 
   function moveUpAnimation() {
-    const turns = 30;
+    const turns = 25;
     let count = 0;
     const intervalId = setInterval(() => {
       if(count === turns){
         clearInterval(intervalId);
-        setTimeout(pointerDownAnimation, 300);
+        setTimeout(pointerDownAnimation, 250);
         return;
       }
       count++;
@@ -216,12 +204,16 @@ function removeElem(removeIdx) {
   }
 
   function pointerDownAnimation() {
-    const turns = 25;
+    const turns = 20;
     let count = 0;
     const intervalId = setInterval(() => {
       if(count === turns) {
         clearInterval(intervalId);
-        setTimeout(pointerUpAnimation, 300)
+        node.children[1].remove();
+        for(let i = removeIdx + 1; i < nodes.length - 1; i++) {
+          nodes[i].children[1].innerText = `pos ${i - 1}`;
+        }
+        setTimeout(pointerUpAnimation, 250)
         return;
       }
       count++;
@@ -232,7 +224,7 @@ function removeElem(removeIdx) {
   }
 
   function pointerUpAnimation() {
-    const turns = 25;
+    const turns = 20;
     let count = 0;
     const intervalId = setInterval(() => {
       if(count === turns) {
@@ -248,7 +240,7 @@ function removeElem(removeIdx) {
   }
   
   function scaleOutAnimate() {
-    const turns = 30;
+    const turns = 25;
     let count = 10;
     node.style.transformOrigin = `${DATA_WIDTH / 2}px ${DATA_WIDTH / 2}px`;
     const intervalId = setInterval(() => {
@@ -263,7 +255,7 @@ function removeElem(removeIdx) {
   }
 
   function collapseAnimate() {
-    const turns = 30;
+    const turns = 25;
     let count = 0;
     const intervalId = setInterval(() => {
       if(count === turns) {
@@ -281,23 +273,25 @@ function removeElem(removeIdx) {
   }
 }
 
-function searchElem(keyValue) {
-  if(getKey.value === '')
-    return;
-
+function searchElem(keyValue) {  
   const notes = document.querySelector('.notes');
+  if(nodes.length === 2){
+    notes.innerText = `Linked list is empty`;
+    getKey.value = '';
+    return;
+  }
   notes.innerText = `Searching for key: ${getKey.value}`;
-  getKey.disabled = true;
-  const posElem = document.createElement('div');
-  posElem.classList.add('position');
 
-  const turns = 100;
+  getKey.disabled = true;
+  disableButtons(searchBtns);
+  const turns = 50;
   let count = 0;
   let pos = 1;
   const intervalId = setInterval(() => {
     if(pos === nodes.length - 1) {
       clearInterval(intervalId);
       notes.innerHTML = `Key: ${keyValue} is not found`;
+      enableButtons(searchBtns);
       getKey.value = '';
       getKey.disabled = false;
       return;
@@ -305,18 +299,14 @@ function searchElem(keyValue) {
       if(nodes[pos].firstElementChild.innerText === keyValue) {
         clearInterval(intervalId);
         notes.innerHTML = `Key: ${keyValue} is found at position ${pos}`; 
-        nodes[pos].lastElementChild.remove();
+        enableButtons(searchBtns);
         getKey.value = '';
         getKey.disabled = false;
         return;
       }
       count = 0;
-      nodes[pos].lastElementChild.remove();
       pos++;
       return;
-    } if (count === 0) {
-      posElem.innerText = `pos ${pos}`;
-      nodes[pos].appendChild(posElem);
     }
     count++;
     let outline;
@@ -326,6 +316,117 @@ function searchElem(keyValue) {
       outline = OUTLINE - (count * (OUTLINE / turns));
     nodes[pos].firstElementChild.style.outlineWidth = outline + 'px';
   }, 10);
+}
+
+function clearList() {
+  if(nodes.length === 2)
+    return;
+
+  disableButtons(createBtns);
+  getMultipleData.disabled = true;
+  document.querySelector('.notes').innerText = '';
+  const nodeContainer = nodes[0].parentElement;
+  scaleInAnimate();
+
+  function scaleInAnimate() {
+    const turns = 25;
+    let count = 0;
+    const intervalId = setInterval(() => {
+      if(count === turns) {
+        clearInterval(intervalId);
+        nodeContainer.innerHTML = `
+          <div class="node">
+            <div class="data" id="head">Head</div>
+            <img class="pointer" src="images/pointer.svg" alt=">">
+          </div>
+          <div class="node">
+            <div class="data" id="null">Null</div>
+          </div>
+        `;
+        setTimeout(scaleOutAnimate, 100);
+        return;
+      }
+      count++;
+      nodeContainer.style.transform = `scaleY(${1 -(count * (1 / turns))})`;
+    }, 10);
+  }
+
+  function scaleOutAnimate() {
+    const turns = 25;
+    let count = 0;
+    const intervalId = setInterval(() => {
+      if(count === turns) {
+        clearInterval(intervalId);
+        nodeContainer.removeAttribute('style');
+        getMultipleData.disabled = false;
+        enableButtons(createBtns);
+        return;
+      }
+      count++;
+      nodeContainer.style.transform = `scaleY(${count * (1 / turns)})`;
+    }, 10)
+  }
+}
+
+function userDefinedList(csv) {
+  disableButtons(createBtns);
+  getMultipleData.disabled = true;
+  document.querySelector('.notes').innerText = '';
+  const nodeContainer = nodes[0].parentElement;
+
+  const datas = Array.from(csv.matchAll(/\d+/g), matchArray => parseInt(matchArray[0]));
+  let nodesHtml = '';
+  for(let i = 0; i < datas.length; i++)
+    nodesHtml += `
+      <div class="node">
+        <div class="data">${datas[i]}</div>
+        <div class="position">pos ${i + 1}</div>
+        <img class="pointer" src="images/pointer.svg" alt=">">
+      </div>
+    `;
+
+  scaleInAnimate();
+
+  function scaleInAnimate() {
+    const turns = 25;
+    let count = 0;
+    const intervalId = setInterval(() => {
+      if(count === turns) {
+        clearInterval(intervalId);
+        nodeContainer.innerHTML = `
+          <div class="node">
+            <div class="data" id="head">Head</div>
+            <img class="pointer" src="images/pointer.svg" alt=">">
+          </div>
+          ${nodesHtml}
+          <div class="node">
+            <div class="data" id="null">Null</div>
+          </div>
+        `;
+        setTimeout(scaleOutAnimate, 100);
+        return;
+      }
+      count++;
+      nodeContainer.style.transform = `scaleY(${1 -(count * (1 / turns))})`;
+    }, 10);
+  }
+
+  function scaleOutAnimate() {
+    const turns = 25;
+    let count = 0;
+    const intervalId = setInterval(() => {
+      if(count === turns) {
+        clearInterval(intervalId);
+        nodeContainer.removeAttribute('style');
+        getMultipleData.value = '';
+        getMultipleData.disabled = false;
+        enableButtons(createBtns);
+        return;
+      }
+      count++;
+      nodeContainer.style.transform = `scaleY(${count * (1 / turns)})`;
+    }, 10)
+  }
 }
 
 function disableButtons(btns) {

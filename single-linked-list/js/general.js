@@ -1,5 +1,6 @@
 const nodes = document.querySelector('.node-container').children;
 
+// option menu
 const optionMenu = document.querySelector('.option-menu');
 optionMenu.addEventListener('change', event => {
   document.querySelector('.notes').innerText = '';
@@ -9,6 +10,8 @@ optionMenu.addEventListener('change', event => {
   showOperations(event.target.value);
 });
 
+
+// input fields
 const getData = document.querySelector('.get-data');
 getData.addEventListener('input', (event) => {
   allowOnlyNumber(event, 1, 100);
@@ -27,20 +30,28 @@ getKey.addEventListener('input', (event) => {
   allowOnlyNumber(event, 1, 100); // position for deletion
 });
 
-const insertBtns = document.querySelectorAll('#insertion button');
-insertBtns[0].addEventListener('click', () => {
-  addElem(1); // element before index 1
-});
-insertBtns[1].addEventListener('click', () => {
-  addElem(nodes.length - 1); // element before index n - 1
-});
-insertBtns[2].addEventListener('click', () => {
-  if(getPosition[0].value !== '') {
-    addElem(parseInt(getPosition[0].value));
-  }
+const getMultipleData = document.querySelector('.get-multiple-data');
+getMultipleData.addEventListener('input', (event) => {
+  allowCommaSeparatedValues(event, 1, 100);
 });
 
-const deleteBtns = document.querySelectorAll('#deletion button');
+
+// buttons
+const insertBtns = document.querySelectorAll('#insert button');
+insertBtns[0].addEventListener('click', () => {
+  if(getData.value !== '')
+    addElem(1); // element before index 1
+});
+insertBtns[1].addEventListener('click', () => {
+  if(getData.value !== '')
+    addElem(nodes.length - 1); // element before index n - 1
+});
+insertBtns[2].addEventListener('click', () => {
+  if(getData.value !== '' && getPosition[0].value !== '') 
+    addElem(parseInt(getPosition[0].value));
+});
+
+const deleteBtns = document.querySelectorAll('#delete button');
 deleteBtns[0].addEventListener('click', () => {
   removeElem(1); // element at index 1
 });
@@ -52,22 +63,36 @@ deleteBtns[2].addEventListener('click', () => {
     removeElem(parseInt(getPosition[1].value));
 });
 
-const searchBtn = document.querySelector('#search button');
-searchBtn.addEventListener('click', () => {
+const searchBtns = document.querySelectorAll('#search button');
+searchBtns[0].addEventListener('click', () => {
   if(getKey.value !== '')  
     searchElem(getKey.value);
 });
 
+const createBtns = document.querySelectorAll('#create button');
+createBtns[0].addEventListener('click', () => {
+  clearList();
+});
+createBtns[1].addEventListener('click', () => {
+  if(getMultipleData.value === '')
+    getMultipleData.value = '6,2,3,5';
+  userDefinedList(getMultipleData.value);
+});
+
+// actions
 function showOperations(option) {
   switch(option) {
-    case 'Insert': 
+    case 'Create':
       displayOperations(0);
       break;
-    case 'Delete': 
+    case 'Insert': 
       displayOperations(1);
       break;
-    case 'Search':
+    case 'Delete': 
       displayOperations(2);
+      break;
+    case 'Search':
+      displayOperations(3);
       break;
   }
 
@@ -86,7 +111,22 @@ function allowOnlyNumber(event, lowerLimit, upperLimit) {
   const data = parseInt(event.data);
   let value = event.target.value;
   if(!Number.isInteger(data) || parseInt(value) < lowerLimit || parseInt(value) >= upperLimit) {
-    value = value.slice(0, value.length-1);
-    event.target.value = value;
+    event.target.value = value.slice(0, value.length-1);
   }
+}
+
+function allowCommaSeparatedValues(event, lowerLimit, upperLimit) {
+  const str = event.target.value;
+  if(event.data === ',') {
+    if(str.length === 1 || str.charAt(str.length - 2) === ',')
+      event.target.value = str.slice(0, str.length - 1);
+    return;
+  }
+  const data = parseInt(event.data);
+  if(Number.isInteger(data)) {
+    const presentNum = str.match(/\d+$/);
+    if(presentNum < lowerLimit || presentNum > upperLimit)
+      event.target.value = str.slice(0, str.length-1);
+  } else 
+    event.target.value = str.slice(0, str.length-1);
 }
