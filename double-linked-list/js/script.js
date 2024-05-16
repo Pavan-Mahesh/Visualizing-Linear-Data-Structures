@@ -17,7 +17,8 @@ function addElem(addIdx) {
   node.innerHTML = `
     <div class="data">${getData.value}</div>
     <div class="position"></div>
-    <img class="pointer" src="images/pointer.svg" alt=">">
+    <img class="prev-pointer" src="images/prev.svg" alt=">">
+    <img class="next-pointer" src="images/next.svg" alt=">">
   `;
   node.style.width = '0';
   node.style.transform = 'scale(0)';
@@ -337,7 +338,7 @@ function clearList() {
         nodeContainer.innerHTML = `
           <div class="node">
             <div class="data" id="head">Head</div>
-            <img class="pointer" src="images/pointer.svg" alt=">">
+            <img class="next-pointer" src="images/next.svg" alt=">">
           </div>
           <div class="node">
             <div class="data" id="null">Null</div>
@@ -381,7 +382,8 @@ function userDefinedList(csv) {
       <div class="node">
         <div class="data">${datas[i]}</div>
         <div class="position">pos ${i + 1}</div>
-        <img class="pointer" src="images/pointer.svg" alt=">">
+        <img class="prev-pointer" src="images/prev.svg" alt=">">
+        <img class="next-pointer" src="images/next.svg" alt=">">
       </div>
     `;
 
@@ -396,7 +398,7 @@ function userDefinedList(csv) {
         nodeContainer.innerHTML = `
           <div class="node">
             <div class="data" id="head">Head</div>
-            <img class="pointer" src="images/pointer.svg" alt=">">
+            <img class="next-pointer" src="images/next.svg" alt=">">
           </div>
           ${nodesHtml}
           <div class="node">

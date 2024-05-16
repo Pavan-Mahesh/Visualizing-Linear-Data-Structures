@@ -35,7 +35,7 @@ body {
   margin-top: 8px;
 }
 
-.single-linked-list {
+.double-linked-list {
   flex-grow: 1;
   max-width: 95%;
   max-height: 55%;
@@ -103,9 +103,15 @@ body {
   border: 2px solid white;
 }
 
-.pointer {
+.next-pointer,
+.prev-pointer {
   width: 30px;
   z-index: 1;
+}
+
+.prev-pointer {
+  position: absolute;
+  left: -30px;
 }
 
 .notes {
