@@ -398,7 +398,7 @@ function userDefinedList(csv) {
         nodeContainer.innerHTML = `
           <div class="node">
             <div class="data" id="head">Head</div>
-            <img class="next-pointer" src="images/next.svg" alt=">">
+            <img class="pointer" src="images/pointer.svg" alt=">">
           </div>
           ${nodesHtml}
           <div class="node">
