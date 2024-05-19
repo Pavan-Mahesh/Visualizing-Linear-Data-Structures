@@ -27,6 +27,22 @@ function addElem(addIdx) {
   nodes[0].parentElement.insertBefore(node, nodes[addIdx]);
   const prev = node.previousElementSibling;
 
+  if(nodes.length === 3) {
+    nodes[0].style.marginRight = '0';
+    const turns = 25;
+    let count = 0;
+    const intervalId = setInterval(() => {
+      if(count === turns) {
+        clearInterval(intervalId);
+        nodes[0].removeAttribute('style');
+        nodes[0].classList.add('null-margin-right');
+        return;
+      }
+      count++;
+      nodes[0].style.marginRight = (count * (NODE_WIDTH / turns)) + 'px';
+    }, 10);
+  }
+
   highlightNodeAnimation();
 
   function highlightNodeAnimation() {
@@ -398,7 +414,7 @@ function userDefinedList(csv) {
         nodeContainer.innerHTML = `
           <div class="node">
             <div class="data" id="head">Head</div>
-            <img class="pointer" src="images/pointer.svg" alt=">">
+            <img class="next-pointer" src="images/next.svg" alt=">">
           </div>
           ${nodesHtml}
           <div class="node">

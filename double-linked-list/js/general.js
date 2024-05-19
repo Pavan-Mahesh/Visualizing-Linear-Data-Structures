@@ -1,4 +1,4 @@
-const nodes = document.querySelector('.node-container').children;
+const nodes = document.querySelector('.dll-nodes').children;
 
 // option menu
 const optionMenu = document.querySelector('.option-menu');
