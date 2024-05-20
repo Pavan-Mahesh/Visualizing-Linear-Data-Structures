@@ -17,15 +17,16 @@ function addElem(addIdx) {
   node.innerHTML = `
     <div class="data">${getData.value}</div>
     <div class="position"></div>
-    <img class="prev-pointer" src="images/prev.svg" alt=">">
-    <img class="next-pointer" src="images/next.svg" alt=">">
+    <div class="pointer-container">
+      <img class="prev-pointer" src="images/prev.svg" alt=">">
+      <img class="next-pointer" src="images/next.svg" alt=">">
+    </div>
   `;
   node.style.width = '0';
   node.style.transform = 'scale(0)';
   node.style.transformOrigin = `${DATA_WIDTH / 2}px ${DATA_WIDTH / 2}px`
-  node.style.top = -DATA_WIDTH + 'px';
+  node.style.top = DATA_WIDTH + 'px';
   nodes[0].parentElement.insertBefore(node, nodes[addIdx]);
-  const prev = node.previousElementSibling;
 
   if(nodes.length === 3) {
     nodes[0].style.marginRight = '0';
@@ -89,7 +90,7 @@ function addElem(addIdx) {
     const intervalId = setInterval(() => {
       if(count === turns) {
         clearInterval(intervalId);
-        setTimeout(pointerDownAnimation, 300)
+        setTimeout(pointerUpAnimation, 300)
         return;
       }
       count++;
@@ -97,52 +98,68 @@ function addElem(addIdx) {
     }, 10);
   }
 
-  function pointerDownAnimation() {
+  function pointerUpAnimation() {
+    const pointerContainer = node.querySelector('.pointer-container');
     const turns = 20;
     let count = 0;
     const intervalId = setInterval(() => {
       if(count === turns) {
         clearInterval(intervalId);
-        setTimeout(pointerUpAnimation, 300)
+        setTimeout(pointerDownAnimation, 300);
         return;
       }
       count++;
       const translate = count * (TRANSLATE / turns);
       const rotate = count * (ROTATE / turns);
-      node.lastElementChild.style.transform = `translateY(${translate}px) rotateZ(${rotate}deg)`;
+      pointerContainer.firstElementChild.style.transform = `translateY(${-translate}px) rotateZ(${rotate}deg)`
+      pointerContainer.lastElementChild.style.transform = `translateY(${-translate}px) rotateZ(${-rotate}deg)`;
     }, 10);
   }
 
-  function pointerUpAnimation() {
+  function pointerDownAnimation() {
+    const prevPointerContainer = node.previousElementSibling.querySelector('.pointer-container');
+    const nextPointerContainer = node.nextElementSibling.querySelector('.pointer-container');
     const turns = 20;
     let count = 0;
     const intervalId = setInterval(() => {
-      if(count === turns) {
+      if(count === turns || !(prevPointerContainer || nextPointerContainer)) {
         clearInterval(intervalId);
         node.children[1].innerText = `pos ${addIdx}`;
         for(let i = addIdx + 1; i < nodes.length - 1; i++) {
           nodes[i].children[1].innerText = `pos ${i}`;
         }
-        setTimeout(moveDownAnimation, 300);
+        setTimeout(moveUpAnimation, 300);
         return;
       }
       count++;
       const translate = count * (TRANSLATE / turns);
       const rotate = count * (ROTATE / turns);
-      prev.lastElementChild.style.transform = `translateY(-${translate}px) rotateZ(-${rotate}deg)` 
+      if(prevPointerContainer)
+        prevPointerContainer.lastElementChild.style.transform = `translateY(${translate}px) rotateZ(+${rotate}deg)`; 
+      if(nextPointerContainer)
+        nextPointerContainer.firstElementChild.style.transform = `translateY(${translate}px) rotateZ(-${rotate}deg)`;
     }, 10);
   }
   
-  function moveDownAnimation() {
+  function moveUpAnimation() {
+    const pointerContainer = node.querySelector('.pointer-container')
+    const prevPointerContainer = node.previousElementSibling.querySelector('.pointer-container');
+    const nextPointerContainer = node.nextElementSibling.querySelector('.pointer-container');
     const turns = 25;
     let count = 0;
     const intervalId = setInterval(() => {
       if(count === turns){
         clearInterval(intervalId);
         notes.innerText = `Inserted ${getData.value} at position ${addIdx}`;
-        prev.lastElementChild.removeAttribute('style');
+        if(prevPointerContainer)
+          prevPointerContainer.lastElementChild.removeAttribute('style');
+        if(nextPointerContainer)
+          nextPointerContainer.firstElementChild.removeAttribute('style');
         node.removeAttribute('style');
-        node.lastElementChild.removeAttribute('style');
+        pointerContainer.firstElementChild.removeAttribute('style');
+        pointerContainer.lastElementChild.removeAttribute('style');
+        if(node.parentElement.classList.contains('initial'))
+          node.parentElement.classList.remove('initial');
         getData.disabled = false;
         getData.value = '';
         getPosition[0].disabled = false;
@@ -151,12 +168,16 @@ function addElem(addIdx) {
         return;
       }
       count++;
-      const removeTop = count * (-DATA_WIDTH / turns);
+      const removeTop = count * (DATA_WIDTH / turns);
       const translate = count * (TRANSLATE / turns);
       const rotate = count * (ROTATE / turns); 
-      node.style.top = (-DATA_WIDTH - removeTop) + 'px';
-      prev.lastElementChild.style.transform = `translateY(${-TRANSLATE + translate}px) rotateZ(${-ROTATE  + rotate}deg)`;
-      node.lastElementChild.style.transform = `translateY(${TRANSLATE - translate}px) rotateZ(${ROTATE - rotate}deg)`;
+      node.style.top = (DATA_WIDTH - removeTop) + 'px';
+      if(prevPointerContainer)
+        prevPointerContainer.lastElementChild.style.transform = `translateY(${TRANSLATE - translate}px) rotateZ(${ROTATE - rotate}deg)`;
+      pointerContainer.firstElementChild.style.transform = `translateY(${-TRANSLATE + translate}px) rotateZ(${ROTATE - rotate}deg)`;
+      pointerContainer.lastElementChild.style.transform = `translateY(${-TRANSLATE + translate}px) rotateZ(${-ROTATE + rotate}deg)`;
+      if(nextPointerContainer)
+        nextPointerContainer.firstElementChild.style.transform = `translateY(${TRANSLATE - translate}px) rotateZ(${-ROTATE + rotate}deg)`;
     }, 10);
   }
 }

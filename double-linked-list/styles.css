@@ -24,8 +24,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow-x: hidden;
-  overflow-y: hidden;
+  overflow: hidden;
   /* border: 1px solid white; */
 }
 
@@ -39,13 +38,15 @@ body {
 
 .double-linked-list {
   flex-grow: 1;
-  max-width: 95%;
+  width: min-content;
+  max-width: 90%;
   max-height: 55%;
-  min-height: calc(calc(3 * var(--data-width)) + 30px);
+  min-height: max-content;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
+  justify-content: center;
+  margin: 20px 0;
   position: relative;
   /* border: 1px solid white; */
 }
@@ -53,13 +54,20 @@ body {
 .node-container {
   flex-grow: 1;
   flex-direction: column;
-  max-width: 100%;
-  min-height: calc(3 * var(--data-width));
+  width: 100%;
+  min-height: calc(calc(2 * var(--node-width)) + var(--data-width));
   display: flex;
   justify-content: center;
   align-items: start;
   overflow-x: scroll;
   /* border: 1px solid white; */
+}
+
+.node-container::after {
+  content: '';
+  display: block;
+  height: 110px;
+  width: 100%;
 }
 
 .node-container::-webkit-scrollbar {
@@ -138,6 +146,10 @@ body {
   white-space: nowrap;
 }
 
+.pointer-container {
+  display: flex;
+}
+
 .next-pointer,
 .prev-pointer {
   width: var(--pointer-width);
@@ -150,11 +162,12 @@ body {
 }
 
 .notes {
+  position: absolute;
+  bottom: 0;
   font-size: 14px;
   height: 1rem;
   white-space: nowrap;
   width: max-content;
-  transform: translateY(-50%);
 }
 
 .show-operations {
@@ -286,8 +299,9 @@ body {
   width: 16px;
 }
 
-@media (max-height: 399px) {
+@media (max-height: 462px) {
   .container {
+    height: max-content;
     justify-content: start;
     overflow-y: scroll;
   }

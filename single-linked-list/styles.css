@@ -43,7 +43,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
+  margin: 20px 0;
   position: relative;
   /* border: 1px solid white; */
 }
@@ -110,11 +110,12 @@ body {
 }
 
 .notes {
+  position: absolute;
+  bottom: 0;
   font-size: 14px;
   height: 1rem;
   white-space: nowrap;
   width: max-content;
-  transform: translateY(-50%);
 }
 
 .show-operations {
