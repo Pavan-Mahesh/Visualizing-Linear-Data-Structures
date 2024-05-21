@@ -37,6 +37,7 @@ function addElem(addIdx) {
         clearInterval(intervalId);
         nodes[0].removeAttribute('style');
         nodes[0].classList.add('null-margin-right');
+        nodes[0].parentElement.classList.remove('initial');
         return;
       }
       count++;
@@ -158,8 +159,6 @@ function addElem(addIdx) {
         node.removeAttribute('style');
         pointerContainer.firstElementChild.removeAttribute('style');
         pointerContainer.lastElementChild.removeAttribute('style');
-        if(node.parentElement.classList.contains('initial'))
-          node.parentElement.classList.remove('initial');
         getData.disabled = false;
         getData.value = '';
         getPosition[0].disabled = false;
@@ -194,7 +193,6 @@ function removeElem(removeIdx) {
   getPosition[1].disabled = true;
   disableButtons(deleteBtns);
   const node = nodes[removeIdx];
-  const prev = node.previousElementSibling;
 
   highlightNodeAnimation();
 
@@ -205,7 +203,7 @@ function removeElem(removeIdx) {
     const intervalId = setInterval(() => {
       if(pos === removeIdx + 1) { // + 1 to highlight the removing node
         clearInterval(intervalId);
-        moveUpAnimation();
+        moveDownAnimation();
         return;
       } else if(count === turns) {
         count = 0;
@@ -222,69 +220,82 @@ function removeElem(removeIdx) {
     }, 10);
   }
 
-  function moveUpAnimation() {
+  function moveDownAnimation() {
+    const pointerContainer = node.querySelector('.pointer-container');
+    const prevPointerContainer = node.previousElementSibling.querySelector('.pointer-container');
+    const nextPointerContainer = node.nextElementSibling.querySelector('.pointer-container');
     const turns = 25;
     let count = 0;
     const intervalId = setInterval(() => {
       if(count === turns){
         clearInterval(intervalId);
-        setTimeout(pointerDownAnimation, 250);
+        setTimeout(pointerUpAnimation, 250);
         return;
       }
       count++;
-      const addTop = count * (-DATA_WIDTH / turns);
+      const addTop = count * (DATA_WIDTH / turns);
       const translate = count * (TRANSLATE / turns);
       const rotate = count * (ROTATE / turns);
       node.style.top = addTop + 'px';
-      prev.lastElementChild.style.transform = `translateY(-${translate}px) rotateZ(-${rotate}deg)`;
-      node.lastElementChild.style.transform = `translateY(${translate}px) rotateZ(${rotate}deg)`;
-    }, 10);
-  }
-
-  function pointerDownAnimation() {
-    const turns = 20;
-    let count = 0;
-    const intervalId = setInterval(() => {
-      if(count === turns) {
-        clearInterval(intervalId);
-        node.children[1].remove();
-        for(let i = removeIdx + 1; i < nodes.length - 1; i++) {
-          nodes[i].children[1].innerText = `pos ${i - 1}`;
-        }
-        setTimeout(pointerUpAnimation, 250)
-        return;
-      }
-      count++;
-      const translate = count * (TRANSLATE / turns);
-      const rotate = count * (ROTATE / turns);
-      prev.lastElementChild.style.transform = `translateY(${-TRANSLATE + translate}px) rotateZ(${-ROTATE + rotate}deg)`;
+      if(prevPointerContainer)
+        prevPointerContainer.lastElementChild.style.transform = `translateY(${translate}px) rotateZ(${rotate}deg)`;
+      pointerContainer.firstElementChild.style.transform = `translateY(-${translate}px) rotateZ(${rotate}deg)`;
+      pointerContainer.lastElementChild.style.transform = `translateY(-${translate}px) rotateZ(-${rotate}deg)`;
+      if(nextPointerContainer)
+        nextPointerContainer.firstElementChild.style.transform = `translateY(${translate}px) rotateZ(-${rotate}deg)`;
     }, 10);
   }
 
   function pointerUpAnimation() {
+    const prevPointerContainer = node.previousElementSibling.querySelector('.pointer-container');
+    const nextPointerContainer = node.nextElementSibling.querySelector('.pointer-container');
     const turns = 20;
     let count = 0;
     const intervalId = setInterval(() => {
-      if(count === turns) {
+      if(count === turns || !(prevPointerContainer || nextPointerContainer)) {
         clearInterval(intervalId);
-        setTimeout(scaleOutAnimate, 300);
+        for(let i = removeIdx + 1; i < nodes.length - 1; i++) {
+          nodes[i].children[1].innerText = `pos ${i - 1}`;
+        }
+        setTimeout(pointerDownAnimation, 300);
         return;
       }
       count++;
       const translate = count * (TRANSLATE / turns);
       const rotate = count * (ROTATE / turns);
-      node.lastElementChild.style.transform = `translateY(${TRANSLATE - translate}px) rotateZ(${ROTATE - rotate}deg)`; 
+      if(prevPointerContainer)
+        prevPointerContainer.lastElementChild.style.transform = `translateY(${TRANSLATE - translate}px) rotateZ(${ROTATE - rotate}deg)`; 
+      if(nextPointerContainer)
+        nextPointerContainer.firstElementChild.style.transform = `translateY(${TRANSLATE - translate}px) rotateZ(${-ROTATE + rotate}deg)`; 
+    }, 10);
+  }
+
+  function pointerDownAnimation() {
+    const pointerContainer = node.querySelector('.pointer-container');
+    const turns = 20;
+    let count = 0;
+    const intervalId = setInterval(() => {
+      if(count === turns) {
+        clearInterval(intervalId);
+        setTimeout(scaleOutAnimation, 300);
+        return;
+      }
+      count++;
+      const translate = count * (TRANSLATE / turns);
+      const rotate = count * (ROTATE / turns);
+      pointerContainer.firstElementChild.style.transform = `translateY(${-TRANSLATE + translate}px) rotateZ(${ROTATE - rotate}deg)`;
+      pointerContainer.lastElementChild.style.transform = `translateY(${-TRANSLATE + translate}px) rotateZ(${-ROTATE + rotate}deg)`;
     }, 10);
   }
   
-  function scaleOutAnimate() {
+  function scaleOutAnimation() {
     const turns = 25;
     let count = 10;
     node.style.transformOrigin = `${DATA_WIDTH / 2}px ${DATA_WIDTH / 2}px`;
     const intervalId = setInterval(() => {
       if(count === turns){
         clearInterval(intervalId);
-        collapseAnimate();
+        collapseAnimation();
         return;
       }
       count++;
@@ -292,7 +303,24 @@ function removeElem(removeIdx) {
     }, 10);
   }
 
-  function collapseAnimate() {
+  function collapseAnimation() {
+    if(nodes.length === 3) {
+      nodes[0].parentElement.classList.add('initial');
+      nodes[0].style.marginRight = '84px';
+      const turns = 25;
+      let count = 0;
+      const intervalId = setInterval(() => {
+        if(count === turns) {
+          clearInterval(intervalId);
+          nodes[0].removeAttribute('style');
+          nodes[0].classList.remove('null-margin-right');
+          return;
+        }
+        count++;
+        nodes[0].style.marginRight = (NODE_WIDTH - (count * (NODE_WIDTH / turns))) + 'px';
+      }, 10);
+    }
+
     const turns = 25;
     let count = 0;
     const intervalId = setInterval(() => {
@@ -363,7 +391,10 @@ function clearList() {
   disableButtons(createBtns);
   getMultipleData.disabled = true;
   document.querySelector('.notes').innerText = '';
-  const nodeContainer = nodes[0].parentElement;
+  const dllContainer = nodes[0].parentElement;
+  const nodeContainer = dllContainer.parentElement;
+  nodeContainer.style.transformOrigin = '50% calc(50% - 26px)';
+
   scaleInAnimate();
 
   function scaleInAnimate() {
@@ -372,16 +403,16 @@ function clearList() {
     const intervalId = setInterval(() => {
       if(count === turns) {
         clearInterval(intervalId);
-        nodeContainer.innerHTML = `
-          <div class="node">
-            <div class="data" id="head">Head</div>
-            <img class="next-pointer" src="images/next.svg" alt=">">
+        dllContainer.classList.add('initial');
+        dllContainer.innerHTML = `
+          <div class="null-node">
+            <div class="data" id="prev-null">Null</div>
           </div>
-          <div class="node">
-            <div class="data" id="null">Null</div>
+          <div class="null-node">
+            <div class="data" id="next-null">Null</div>
           </div>
         `;
-        setTimeout(scaleOutAnimate, 100);
+        setTimeout(scaleOutAnimate, 250);
         return;
       }
       count++;
@@ -410,7 +441,9 @@ function userDefinedList(csv) {
   disableButtons(createBtns);
   getMultipleData.disabled = true;
   document.querySelector('.notes').innerText = '';
-  const nodeContainer = nodes[0].parentElement;
+  const dllContainer = nodes[0].parentElement;
+  const nodeContainer = dllContainer.parentElement;
+  nodeContainer.style.transformOrigin = '50% calc(50% - 26px)';
 
   const datas = Array.from(csv.matchAll(/\d+/g), matchArray => parseInt(matchArray[0]));
   let nodesHtml = '';
@@ -419,8 +452,10 @@ function userDefinedList(csv) {
       <div class="node">
         <div class="data">${datas[i]}</div>
         <div class="position">pos ${i + 1}</div>
-        <img class="prev-pointer" src="images/prev.svg" alt=">">
-        <img class="next-pointer" src="images/next.svg" alt=">">
+        <div class="pointer-container">
+          <img class="prev-pointer" src="images/prev.svg" alt=">">
+          <img class="next-pointer" src="images/next.svg" alt=">">
+        </div>
       </div>
     `;
 
@@ -432,17 +467,18 @@ function userDefinedList(csv) {
     const intervalId = setInterval(() => {
       if(count === turns) {
         clearInterval(intervalId);
-        nodeContainer.innerHTML = `
-          <div class="node">
-            <div class="data" id="head">Head</div>
-            <img class="next-pointer" src="images/next.svg" alt=">">
+        if(dllContainer.classList.contains('initial'))
+          dllContainer.classList.remove('initial');
+        dllContainer.innerHTML = `
+          <div class="null-node null-margin-right">
+            <div class="data" id="prev-null">Null</div>
           </div>
           ${nodesHtml}
-          <div class="node">
-            <div class="data" id="null">Null</div>
+          <div class="null-node">
+            <div class="data" id="next-null">Null</div>
           </div>
         `;
-        setTimeout(scaleOutAnimate, 100);
+        setTimeout(scaleOutAnimate, 250);
         return;
       }
       count++;
