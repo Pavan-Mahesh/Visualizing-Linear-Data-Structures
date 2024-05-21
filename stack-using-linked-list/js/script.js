@@ -22,33 +22,9 @@ function addElem(addIdx) {
   node.style.transformOrigin = `${DATA_WIDTH / 2}px ${DATA_WIDTH / 2}px`
   node.style.top = -DATA_WIDTH + 'px';
   nodes[0].parentElement.insertBefore(node, nodes[addIdx]);
-  const prev = node.previousElementSibling;
+  const top = nodes[0];
 
-  highlightNodeAnimation();
-
-  function highlightNodeAnimation() {
-    const turns = 50;
-    let count = 0;
-    let pos = 1;
-    const intervalId = setInterval(() => {
-      if(pos === addIdx) {
-        clearInterval(intervalId);
-        makeSpaceAnimate();
-        return;
-      } else if(count === turns) {
-        count = 0;
-        pos++;
-        return;
-      }
-      count++;
-      let outline;
-      if(count <= (turns / 2))
-        outline = count * (OUTLINE / turns);
-      else
-        outline = OUTLINE - (count * (OUTLINE / turns));
-      nodes[pos].firstElementChild.style.outlineWidth = outline + 'px';
-    }, 10);
-  }
+  makeSpaceAnimate();
 
   function makeSpaceAnimate() {
     const turns = 25;
@@ -110,7 +86,7 @@ function addElem(addIdx) {
       count++;
       const translate = count * (TRANSLATE / turns);
       const rotate = count * (ROTATE / turns);
-      prev.lastElementChild.style.transform = `translateY(-${translate}px) rotateZ(-${rotate}deg)` 
+      top.lastElementChild.style.transform = `translateY(-${translate}px) rotateZ(-${rotate}deg)` 
     }, 10);
   }
   
@@ -121,7 +97,7 @@ function addElem(addIdx) {
       if(count === turns){
         clearInterval(intervalId);
         notes.innerText = `Added ${getData.value} to stack`;
-        prev.lastElementChild.removeAttribute('style');
+        top.lastElementChild.removeAttribute('style');
         node.removeAttribute('style');
         node.lastElementChild.removeAttribute('style');
         getData.disabled = false;
@@ -134,7 +110,7 @@ function addElem(addIdx) {
       const translate = count * (TRANSLATE / turns);
       const rotate = count * (ROTATE / turns); 
       node.style.top = (-DATA_WIDTH - removeTop) + 'px';
-      prev.lastElementChild.style.transform = `translateY(${-TRANSLATE + translate}px) rotateZ(${-ROTATE  + rotate}deg)`;
+      top.lastElementChild.style.transform = `translateY(${-TRANSLATE + translate}px) rotateZ(${-ROTATE  + rotate}deg)`;
       node.lastElementChild.style.transform = `translateY(${TRANSLATE - translate}px) rotateZ(${ROTATE - rotate}deg)`;
     }, 10);
   }
@@ -150,33 +126,9 @@ function removeElem(removeIdx) {
 
   disableButtons(operationBtns);
   const node = nodes[removeIdx];
-  const prev = node.previousElementSibling;
+  const top = nodes[0];
 
-  highlightNodeAnimation();
-
-  function highlightNodeAnimation() {
-    const turns = 50;
-    let count = 0;
-    let pos = 1;
-    const intervalId = setInterval(() => {
-      if(pos === removeIdx + 1) { // + 1 to highlight the removing node
-        clearInterval(intervalId);
-        moveUpAnimation();
-        return;
-      } else if(count === turns) {
-        count = 0;
-        pos++;
-        return;
-      }
-      count++;
-      let outline;
-      if(count <= (turns / 2))
-        outline = count * (OUTLINE / turns);
-      else
-        outline = OUTLINE - (count * (OUTLINE / turns));
-      nodes[pos].firstElementChild.style.outlineWidth = outline + 'px';
-    }, 10);
-  }
+  moveUpAnimation();
 
   function moveUpAnimation() {
     const turns = 25;
@@ -192,7 +144,7 @@ function removeElem(removeIdx) {
       const translate = count * (TRANSLATE / turns);
       const rotate = count * (ROTATE / turns);
       node.style.top = addTop + 'px';
-      prev.lastElementChild.style.transform = `translateY(-${translate}px) rotateZ(-${rotate}deg)`;
+      top.lastElementChild.style.transform = `translateY(-${translate}px) rotateZ(-${rotate}deg)`;
       node.lastElementChild.style.transform = `translateY(${translate}px) rotateZ(${rotate}deg)`;
     }, 10);
   }
@@ -213,7 +165,7 @@ function removeElem(removeIdx) {
       count++;
       const translate = count * (TRANSLATE / turns);
       const rotate = count * (ROTATE / turns);
-      prev.lastElementChild.style.transform = `translateY(${-TRANSLATE + translate}px) rotateZ(${-ROTATE + rotate}deg)`;
+      top.lastElementChild.style.transform = `translateY(${-TRANSLATE + translate}px) rotateZ(${-ROTATE + rotate}deg)`;
     }, 10);
   }
 
@@ -328,7 +280,7 @@ function clearList() {
         clearInterval(intervalId);
         nodeContainer.innerHTML = `
           <div class="node">
-            <div class="data" id="head">Top</div>
+            <div class="data" id="top">Top</div>
             <img class="pointer" src="images/pointer.svg" alt=">">
           </div>
           <div class="node">
@@ -387,7 +339,7 @@ function userDefinedList(csv) {
         clearInterval(intervalId);
         nodeContainer.innerHTML = `
           <div class="node">
-            <div class="data" id="head">Top</div>
+            <div class="data" id="top">Top</div>
             <img class="pointer" src="images/pointer.svg" alt=">">
           </div>
           ${nodesHtml}

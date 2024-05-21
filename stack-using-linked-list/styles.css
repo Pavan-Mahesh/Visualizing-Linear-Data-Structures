@@ -96,7 +96,7 @@ body {
   white-space: nowrap;
 }
 
-#head {
+#top {
   background-color: transparent;
   color: white;
   width: calc(var(--data-width) - 4px);
