@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visulizing Double Linked List</title>
+
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="container">
+      <p class="title">
+        Double Linked List
+      </p>
+
+      <div class="double-linked-list">
+        <div class="node-container">
+          <div class="head-node">
+            <div class="data" id="head">Head</div>
+            <img class="next-pointer" src="images/next.svg" alt=" > ">
+          </div>
+          <div class="dll-nodes initial">
+            <div class="null-node">
+              <div class="data" id="prev-null">Null</div>
+            </div>
+            <div class="null-node">
+              <div class="data" id="next-null">Null</div>
+            </div>
+          </div>
+        </div>
+        <div class="notes"></div>
+      </div>
+      
+      <div class="show-operations">
+        <div class="options-container">
+          <div>Select an operation</div>
+          <select class="option-menu">
+            <option id="default">-select-</option>
+            <option>Create</option>
+            <option>Insert</option>
+            <option>Delete</option>
+            <option>Search</option>
+          </select>
+        </div>
+
+        <div class="operations-container">
+          <div id="create">
+            <div class="operation-menu">
+              <button class="empty">Empty list</button>
+              <div class="user-defined-list">
+                <div>User defined</div>
+                <div class="input-field">
+                  <input class="get-multiple-data" type="text" placeholder="ex: 6,2,3,5">
+                  <button class="confirm-button">
+                    <img class="confirm-icon" src="images/confirm.svg" alt="confirm">
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="insert">
+            <div class="user-input">
+              <lable>Data</lable>
+              <input class="get-data" type="text" placeholder="Enter value">
+            </div>
+            <div class="operation-menu">
+              <button id="add-first-btn">Beginning</button>
+              <button id="add-last-btn">End</button>
+              <div class="input-field">
+                <input class="get-position" type="text" placeholder="Position">
+                <button class="confirm-button">
+                  <img class="confirm-icon" src="images/confirm.svg" alt="confirm">
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div id="delete">
+            <div class="operation-menu">
+              <button id="remove-first-btn">Beginning</button>
+              <button id="remove-last-btn">End</button>
+              <div class="input-field">
+                <input class="get-position" type="text" placeholder="Position">
+                <button class="confirm-button">
+                  <img class="confirm-icon" src="images/confirm.svg" alt="confirm">
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div id="search">
+            <div class="operation-menu">
+              <div class="input-field">
+                <input class="get-key" type="text" placeholder="Key value">
+                <button class="confirm-button">
+                  <img class="confirm-icon" src="images/confirm.svg" alt="confirm">
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script src="js/general.js"></script>
+  </body>
+</html>
