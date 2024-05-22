@@ -35,7 +35,7 @@ body {
   margin-top: 8px;
 }
 
-.single-linked-list {
+.stack-list {
   flex-grow: 1;
   max-width: 95%;
   max-height: 55%;
@@ -164,7 +164,7 @@ body {
   display: flex;
   justify-content: space-evenly;
   align-items: stretch;
-  gap: 12px;
+  gap: 13px;
 }
 
 .user-defined-list {

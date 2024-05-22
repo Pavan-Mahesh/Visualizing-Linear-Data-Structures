@@ -217,7 +217,7 @@ body {
   display: flex;
   justify-content: space-evenly;
   align-items: stretch;
-  gap: 12px;
+  gap: 13px;
 }
 
 .user-input {
@@ -233,7 +233,6 @@ body {
 
 .operation-menu button {
   font-size: 14px;
-  flex-grow: 1;
   background-color: white;
   color: black;
   height: 1.5rem;
