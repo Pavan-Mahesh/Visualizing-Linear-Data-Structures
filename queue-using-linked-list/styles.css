@@ -3,6 +3,7 @@
 :root {
   --data-width: 54px;
   --pointer-width: 30px;
+  --node-width: 84px;
 }
 
 * {
@@ -23,8 +24,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow-x: hidden;
-  overflow-y: hidden;
+  overflow: hidden;
   /* border: 1px solid white; */
 }
 
@@ -36,14 +36,16 @@ body {
   margin-top: 8px;
 }
 
-.single-linked-list {
+.queue-list {
   flex-grow: 1;
-  max-width: 95%;
+  width: min-content;
+  max-width: 90%;
   max-height: 55%;
-  min-height: calc(calc(3 * var(--data-width)) + var(--pointer-width));
+  min-height: max-content;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   margin: 20px 0;
   position: relative;
   /* border: 1px solid white; */
@@ -51,13 +53,21 @@ body {
 
 .node-container {
   flex-grow: 1;
-  max-width: 100%;
-  min-height: calc(3 * var(--data-width));
+  flex-direction: column;
+  width: 100%;
+  min-height: max-content;
   display: flex;
-  justify-content: start;
-  align-items: center;
+  justify-content: center;
+  align-items: start;
   overflow-x: scroll;
   /* border: 1px solid white; */
+}
+
+.node-container::after {
+  content: '';
+  display: block;
+  height: 110px;
+  width: 100%;
 }
 
 .node-container::-webkit-scrollbar {
@@ -67,6 +77,41 @@ body {
 .node-container {
   scrollbar-width: none;
   -ms-overflow-style: none;
+}
+
+.queue-nodes {
+  display: flex;
+}
+
+.front-node {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  width: calc(var(--node-width) + var(--data-width));
+}
+
+.rear-node {
+  display: flex;
+  align-items: center;
+}
+
+#rear,
+#front {
+  background-color: transparent;
+  color: white;
+  width: calc(var(--data-width) - 4px);
+  height: calc(var(--data-width) - 4px);
+  border: 2px solid white;
+}
+
+#front {
+  font-size: 15px;
+}
+
+.front-node img {
+  position: relative;
+  right: 12px;
+  transform: rotateZ(90deg);
 }
 
 .node {
@@ -93,16 +138,8 @@ body {
   width: var(--data-width);
   text-align: center;
   position: absolute;
-  bottom: -2rem;
+  bottom: -1.8rem;
   white-space: nowrap;
-}
-
-#head {
-  background-color: transparent;
-  color: white;
-  width: calc(var(--data-width) - 4px);
-  height: calc(var(--data-width) - 4px);
-  border: 2px solid white;
 }
 
 .pointer {
@@ -135,7 +172,7 @@ body {
   background-color: white;
   color: black;
   height: 1.5rem;
-  width: 100px;
+  width: 165px;
   border-radius: 2px;
   padding-left: 4px;
   cursor: pointer;
@@ -179,14 +216,12 @@ body {
   color: black;
   height: 1.5rem;
   padding: 0 12px;
-  /* border: 1px solid white; */
   border: none;
   border-radius: 2px;
   cursor: pointer;
 }
 
 .get-data,
-.get-position,
 .get-key,
 .get-multiple-data {
   background-color: white;
@@ -207,10 +242,6 @@ body {
   align-items: center;
 }
 
-.get-position {
-  width: 65px;
-}
-
 .get-key {
   width: 75px;
 }
@@ -219,12 +250,21 @@ body {
   width: 120px
 }
 
-.get-position,
+.get-data,
 .get-key,
 .get-multiple-data {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   border-right: 1px solid black;
+}
+
+.enqueue-operation {
+  display: flex;
+}
+
+.enqueue-button {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
 }
 
 .confirm-button {
@@ -240,8 +280,9 @@ body {
   width: 16px;
 }
 
-@media (max-height: 399px) {
+@media (max-height: 456px) {
   .container {
+    height: max-content;
     justify-content: start;
     overflow-y: scroll;
   }

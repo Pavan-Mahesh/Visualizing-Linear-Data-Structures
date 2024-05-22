@@ -3,24 +3,30 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visulizing Stack Using Linked List</title>
+    <title>Visulizing Queue Using Linked List</title>
 
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <div class="container">
       <p class="title">
-        Stack Using Linked List
+        Queue Using Linked List
       </p>
 
-      <div class="stack-list">
+      <div class="queue-list">
         <div class="node-container">
-          <div class="node">
-            <div class="data" id="top">Top</div>
+          <div class="front-node">
+            <div class="data" id="front">Front</div>
             <img class="pointer" src="images/pointer.svg" alt=" > ">
           </div>
-          <div class="node">
-            <div class="data" id="null">Null</div>
+          <div class="queue-nodes">
+            <div class="rear-node">
+              <div class="data" id="rear">Rear</div>
+              <img class="pointer" src="images/pointer.svg" alt=" > ">
+            </div>
+            <div class="null-node">
+              <div class="data" id="next-null">Null</div>
+            </div>
           </div>
         </div>
         <div class="notes"></div>
@@ -32,7 +38,7 @@
           <select class="option-menu">
             <option id="default">-select-</option>
             <option>Create</option>
-            <option>Push & Pop</option>
+            <option>Enqueue & Dequeue</option>
             <option>Search</option>
           </select>
         </div>
@@ -40,7 +46,7 @@
         <div class="operations-container">
           <div id="create">
             <div class="operation-menu">
-              <button class="empty">Empty stack</button>
+              <button class="empty">Empty list</button>
               <div class="user-defined-list">
                 <div>User defined</div>
                 <div class="input-field">
@@ -53,14 +59,14 @@
             </div>
           </div>
 
-          <div id="push-pop">
+          <div id="enqueue-dequeue">
             <div class="operation-menu">
-              <div class="push-operation">
+              <div class="enqueue-operation">
                 <input class="get-data" type="text" placeholder="Enter value">
-                <button class="push-button">Push</button>
+                <button class="enqueue-button">Enqueue</button>
               </div>
-              <div class="pop-operation">
-                <button class="pop-button">Pop</button>
+              <div class="dequeue-operation">
+                <button class="dequeue-button">Dequeue</button>
               </div>
             </div>
           </div>

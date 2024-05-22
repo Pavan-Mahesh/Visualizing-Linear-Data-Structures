@@ -1,4 +1,4 @@
-const nodes = document.querySelector('.node-container').children;
+const nodes = document.querySelector('.queue-nodes').children;
 
 // option menu
 const optionMenu = document.querySelector('.option-menu');
@@ -29,13 +29,13 @@ getMultipleData.addEventListener('input', (event) => {
 
 
 // buttons
-const operationBtns = document.querySelectorAll('#push-pop button');
+const operationBtns = document.querySelectorAll('#enqueue-dequeue button');
 operationBtns[0].addEventListener('click', () => {
   if(getData.value !== '')
     addElem(1);
 });
 operationBtns[1].addEventListener('click', () => {
-  removeElem(1);
+  removeElem(nodes.length - 2);
 });
 
 const searchBtns = document.querySelectorAll('#search button');
@@ -60,7 +60,7 @@ function showOperations(option) {
     case 'Create':
       displayOperations(0);
       break;
-    case 'Push & Pop': 
+    case 'Enqueue & Dequeue': 
       displayOperations(1);
       break;
     case 'Search': 
@@ -80,6 +80,8 @@ function showOperations(option) {
 }
 
 function allowOnlyNumber(event, lowerLimit, upperLimit) {
+  if(event.inputType === 'deleteContentBackward')
+    return;
   const data = parseInt(event.data);
   let value = event.target.value;
   if(!Number.isInteger(data) || parseInt(value) < lowerLimit || parseInt(value) >= upperLimit) {
@@ -88,6 +90,8 @@ function allowOnlyNumber(event, lowerLimit, upperLimit) {
 }
 
 function allowCommaSeparatedValues(event, lowerLimit, upperLimit) {
+  if(event.inputType === 'deleteContentBackward')
+    return;
   const str = event.target.value;
   if(event.data === ',') {
     if(str.length === 1 || str.charAt(str.length - 2) === ',')

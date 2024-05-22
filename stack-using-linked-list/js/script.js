@@ -6,7 +6,7 @@ const OUTLINE = 20;
 
 function addElem(addIdx) {
   const notes = document.querySelector('.notes');
-  notes.innerText = `Adding node to stack`;
+  notes.innerText = `Adding node to Stack`;
 
   getData.disabled = true;
   disableButtons(operationBtns);
@@ -96,7 +96,7 @@ function addElem(addIdx) {
     const intervalId = setInterval(() => {
       if(count === turns){
         clearInterval(intervalId);
-        notes.innerText = `Added ${getData.value} to stack`;
+        notes.innerText = `Added ${getData.value} to Stack`;
         top.lastElementChild.removeAttribute('style');
         node.removeAttribute('style');
         node.lastElementChild.removeAttribute('style');
@@ -122,7 +122,7 @@ function removeElem(removeIdx) {
     notes.innerText = `Stack is empty`;
     return;
   }
-  notes.innerText = `Removing node from stack`;
+  notes.innerText = `Removing node from Stack`;
 
   disableButtons(operationBtns);
   const node = nodes[removeIdx];
@@ -205,7 +205,7 @@ function removeElem(removeIdx) {
     let count = 0;
     const intervalId = setInterval(() => {
       if(count === turns) {
-        notes.innerText = `Removed ${node.firstElementChild.innerText} from stack`;
+        notes.innerText = `Removed ${node.firstElementChild.innerText} from Stack`;
         node.remove();
         clearInterval(intervalId);
         enableButtons(operationBtns);

@@ -6,21 +6,16 @@ const OUTLINE = 20;
 
 function addElem(addIdx) {
   const notes = document.querySelector('.notes');
-  notes.innerText = `Inserting node at position ${addIdx}`;
+  notes.innerText = `Adding node to Queue`;
 
   getData.disabled = true;
-  getPosition[0].value = addIdx;
-  getPosition[0].disabled = true;
-  disableButtons(insertBtns);
+  disableButtons(operationBtns);
   const node = document.createElement('div');
   node.classList.add('node');
   node.innerHTML = `
     <div class="data">${getData.value}</div>
     <div class="position"></div>
-    <div class="pointer-container">
-      <img class="prev-pointer" src="images/prev.svg" alt=">">
-      <img class="next-pointer" src="images/next.svg" alt=">">
-    </div>
+    <img class="pointer" src="images/pointer.svg" alt=">">
   `;
   node.style.width = '0';
   node.style.transform = 'scale(0)';
@@ -28,48 +23,22 @@ function addElem(addIdx) {
   node.style.top = DATA_WIDTH + 'px';
   nodes[0].parentElement.insertBefore(node, nodes[addIdx]);
 
-  if(nodes.length === 3) {
-    nodes[0].style.marginRight = '0';
+  if(nodes.length > 3) {
+    const front = document.querySelector('.front-node');
+    const initialWidth = front.getBoundingClientRect().width;
     const turns = 25;
     let count = 0;
     const intervalId = setInterval(() => {
       if(count === turns) {
         clearInterval(intervalId);
-        nodes[0].removeAttribute('style');
-        nodes[0].classList.add('null-margin-right');
-        nodes[0].parentElement.classList.remove('initial');
         return;
       }
       count++;
-      nodes[0].style.marginRight = (count * (NODE_WIDTH / turns)) + 'px';
+      front.style.width = (initialWidth + (count * (NODE_WIDTH / turns))) + 'px';
     }, 10);
   }
 
-  highlightNodeAnimation();
-
-  function highlightNodeAnimation() {
-    const turns = 50;
-    let count = 0;
-    let pos = 1;
-    const intervalId = setInterval(() => {
-      if(pos === addIdx) {
-        clearInterval(intervalId);
-        makeSpaceAnimate();
-        return;
-      } else if(count === turns) {
-        count = 0;
-        pos++;
-        return;
-      }
-      count++;
-      let outline;
-      if(count <= (turns / 2))
-        outline = count * (OUTLINE / turns);
-      else
-        outline = OUTLINE - (count * (OUTLINE / turns));
-      nodes[pos].firstElementChild.style.outlineWidth = outline + 'px';
-    }, 10);
-  }
+  makeSpaceAnimate();
 
   function makeSpaceAnimate() {
     const turns = 25;
@@ -100,7 +69,6 @@ function addElem(addIdx) {
   }
 
   function pointerUpAnimation() {
-    const pointerContainer = node.querySelector('.pointer-container');
     const turns = 20;
     let count = 0;
     const intervalId = setInterval(() => {
@@ -112,21 +80,20 @@ function addElem(addIdx) {
       count++;
       const translate = count * (TRANSLATE / turns);
       const rotate = count * (ROTATE / turns);
-      pointerContainer.firstElementChild.style.transform = `translateY(${-translate}px) rotateZ(${rotate}deg)`
-      pointerContainer.lastElementChild.style.transform = `translateY(${-translate}px) rotateZ(${-rotate}deg)`;
+      node.lastElementChild.style.transform = `translateY(${-translate}px) rotateZ(${-rotate}deg)`;
     }, 10);
   }
 
   function pointerDownAnimation() {
-    const prevPointerContainer = node.previousElementSibling.querySelector('.pointer-container');
-    const nextPointerContainer = node.nextElementSibling.querySelector('.pointer-container');
+    const prev = node.previousElementSibling;
     const turns = 20;
     let count = 0;
     const intervalId = setInterval(() => {
-      if(count === turns || !(prevPointerContainer || nextPointerContainer)) {
+      if(count === turns) {
         clearInterval(intervalId);
         node.children[1].innerText = `pos ${addIdx}`;
         for(let i = addIdx + 1; i < nodes.length - 1; i++) {
+          console.log(nodes[i]);
           nodes[i].children[1].innerText = `pos ${i}`;
         }
         setTimeout(moveUpAnimation, 300);
@@ -135,35 +102,23 @@ function addElem(addIdx) {
       count++;
       const translate = count * (TRANSLATE / turns);
       const rotate = count * (ROTATE / turns);
-      if(prevPointerContainer)
-        prevPointerContainer.lastElementChild.style.transform = `translateY(${translate}px) rotateZ(+${rotate}deg)`; 
-      if(nextPointerContainer)
-        nextPointerContainer.firstElementChild.style.transform = `translateY(${translate}px) rotateZ(-${rotate}deg)`;
+      prev.lastElementChild.style.transform = `translateY(${translate}px) rotateZ(+${rotate}deg)`; 
     }, 10);
   }
   
   function moveUpAnimation() {
-    const pointerContainer = node.querySelector('.pointer-container')
-    const prevPointerContainer = node.previousElementSibling.querySelector('.pointer-container');
-    const nextPointerContainer = node.nextElementSibling.querySelector('.pointer-container');
+    const prev = node.previousElementSibling;
     const turns = 25;
     let count = 0;
     const intervalId = setInterval(() => {
       if(count === turns){
         clearInterval(intervalId);
-        notes.innerText = `Inserted ${getData.value} at position ${addIdx}`;
-        if(prevPointerContainer)
-          prevPointerContainer.lastElementChild.removeAttribute('style');
-        if(nextPointerContainer)
-          nextPointerContainer.firstElementChild.removeAttribute('style');
+        notes.innerText = `Addeded ${getData.value} to Queue`;
         node.removeAttribute('style');
-        pointerContainer.firstElementChild.removeAttribute('style');
-        pointerContainer.lastElementChild.removeAttribute('style');
+        prev.lastElementChild.removeAttribute('style');
         getData.disabled = false;
         getData.value = '';
-        getPosition[0].disabled = false;
-        getPosition[0].value = '';
-        enableButtons(insertBtns);
+        enableButtons(operationBtns);
         return;
       }
       count++;
@@ -171,12 +126,8 @@ function addElem(addIdx) {
       const translate = count * (TRANSLATE / turns);
       const rotate = count * (ROTATE / turns); 
       node.style.top = (DATA_WIDTH - removeTop) + 'px';
-      if(prevPointerContainer)
-        prevPointerContainer.lastElementChild.style.transform = `translateY(${TRANSLATE - translate}px) rotateZ(${ROTATE - rotate}deg)`;
-      pointerContainer.firstElementChild.style.transform = `translateY(${-TRANSLATE + translate}px) rotateZ(${ROTATE - rotate}deg)`;
-      pointerContainer.lastElementChild.style.transform = `translateY(${-TRANSLATE + translate}px) rotateZ(${-ROTATE + rotate}deg)`;
-      if(nextPointerContainer)
-        nextPointerContainer.firstElementChild.style.transform = `translateY(${TRANSLATE - translate}px) rotateZ(${-ROTATE + rotate}deg)`;
+      prev.lastElementChild.style.transform = `translateY(${TRANSLATE - translate}px) rotateZ(${ROTATE - rotate}deg)`;
+      node.lastElementChild.style.transform = `translateY(${-TRANSLATE + translate}px) rotateZ(${-ROTATE + rotate}deg)`;
     }, 10);
   }
 }
@@ -184,46 +135,18 @@ function addElem(addIdx) {
 function removeElem(removeIdx) {
   const notes = document.querySelector('.notes');
   if(nodes.length === 2){
-    notes.innerText = `Linked list is empty`;
+    notes.innerText = `Queue is empty`;
     return;
   }
-  notes.innerText = `Deleting node from position ${removeIdx}`;
+  notes.innerText = `Removing node from Queue`;
 
-  getPosition[1].value = removeIdx;
-  getPosition[1].disabled = true;
-  disableButtons(deleteBtns);
+  disableButtons(operationBtns);
   const node = nodes[removeIdx];
 
-  highlightNodeAnimation();
-
-  function highlightNodeAnimation() {
-    const turns = 50;
-    let count = 0;
-    let pos = 1;
-    const intervalId = setInterval(() => {
-      if(pos === removeIdx + 1) { // + 1 to highlight the removing node
-        clearInterval(intervalId);
-        moveDownAnimation();
-        return;
-      } else if(count === turns) {
-        count = 0;
-        pos++;
-        return;
-      }
-      count++;
-      let outline;
-      if(count <= (turns / 2))
-        outline = count * (OUTLINE / turns);
-      else
-        outline = OUTLINE - (count * (OUTLINE / turns));
-      nodes[pos].firstElementChild.style.outlineWidth = outline + 'px';
-    }, 10);
-  }
+  moveDownAnimation();
 
   function moveDownAnimation() {
-    const pointerContainer = node.querySelector('.pointer-container');
-    const prevPointerContainer = node.previousElementSibling.querySelector('.pointer-container');
-    const nextPointerContainer = node.nextElementSibling.querySelector('.pointer-container');
+    const prev = node.previousElementSibling;
     const turns = 25;
     let count = 0;
     const intervalId = setInterval(() => {
@@ -237,22 +160,17 @@ function removeElem(removeIdx) {
       const translate = count * (TRANSLATE / turns);
       const rotate = count * (ROTATE / turns);
       node.style.top = addTop + 'px';
-      if(prevPointerContainer)
-        prevPointerContainer.lastElementChild.style.transform = `translateY(${translate}px) rotateZ(${rotate}deg)`;
-      pointerContainer.firstElementChild.style.transform = `translateY(-${translate}px) rotateZ(${rotate}deg)`;
-      pointerContainer.lastElementChild.style.transform = `translateY(-${translate}px) rotateZ(-${rotate}deg)`;
-      if(nextPointerContainer)
-        nextPointerContainer.firstElementChild.style.transform = `translateY(${translate}px) rotateZ(-${rotate}deg)`;
+      prev.lastElementChild.style.transform = `translateY(${translate}px) rotateZ(${rotate}deg)`;
+      node.lastElementChild.style.transform = `translateY(-${translate}px) rotateZ(-${rotate}deg)`;
     }, 10);
   }
 
   function pointerUpAnimation() {
-    const prevPointerContainer = node.previousElementSibling.querySelector('.pointer-container');
-    const nextPointerContainer = node.nextElementSibling.querySelector('.pointer-container');
+    const prev = node.previousElementSibling;
     const turns = 20;
     let count = 0;
     const intervalId = setInterval(() => {
-      if(count === turns || !(prevPointerContainer || nextPointerContainer)) {
+      if(count === turns) {
         clearInterval(intervalId);
         for(let i = removeIdx + 1; i < nodes.length - 1; i++) {
           nodes[i].children[1].innerText = `pos ${i - 1}`;
@@ -263,15 +181,11 @@ function removeElem(removeIdx) {
       count++;
       const translate = count * (TRANSLATE / turns);
       const rotate = count * (ROTATE / turns);
-      if(prevPointerContainer)
-        prevPointerContainer.lastElementChild.style.transform = `translateY(${TRANSLATE - translate}px) rotateZ(${ROTATE - rotate}deg)`; 
-      if(nextPointerContainer)
-        nextPointerContainer.firstElementChild.style.transform = `translateY(${TRANSLATE - translate}px) rotateZ(${-ROTATE + rotate}deg)`; 
+      prev.lastElementChild.style.transform = `translateY(${TRANSLATE - translate}px) rotateZ(${ROTATE - rotate}deg)`;
     }, 10);
   }
 
   function pointerDownAnimation() {
-    const pointerContainer = node.querySelector('.pointer-container');
     const turns = 20;
     let count = 0;
     const intervalId = setInterval(() => {
@@ -283,8 +197,7 @@ function removeElem(removeIdx) {
       count++;
       const translate = count * (TRANSLATE / turns);
       const rotate = count * (ROTATE / turns);
-      pointerContainer.firstElementChild.style.transform = `translateY(${-TRANSLATE + translate}px) rotateZ(${ROTATE - rotate}deg)`;
-      pointerContainer.lastElementChild.style.transform = `translateY(${-TRANSLATE + translate}px) rotateZ(${-ROTATE + rotate}deg)`;
+      node.lastElementChild.style.transform = `translateY(${-TRANSLATE + translate}px) rotateZ(${-ROTATE + rotate}deg)`;
     }, 10);
   }
   
@@ -304,20 +217,18 @@ function removeElem(removeIdx) {
   }
 
   function collapseAnimation() {
-    if(nodes.length === 3) {
-      nodes[0].parentElement.classList.add('initial');
-      nodes[0].style.marginRight = '84px';
+    if(nodes.length > 3) {
+      const front = document.querySelector('.front-node');
+      const initialWidth = front.getBoundingClientRect().width;
       const turns = 25;
       let count = 0;
       const intervalId = setInterval(() => {
         if(count === turns) {
           clearInterval(intervalId);
-          nodes[0].removeAttribute('style');
-          nodes[0].classList.remove('null-margin-right');
           return;
         }
         count++;
-        nodes[0].style.marginRight = (NODE_WIDTH - (count * (NODE_WIDTH / turns))) + 'px';
+        front.style.width = (initialWidth - (count * (NODE_WIDTH / turns))) + 'px';
       }, 10);
     }
 
@@ -325,12 +236,10 @@ function removeElem(removeIdx) {
     let count = 0;
     const intervalId = setInterval(() => {
       if(count === turns) {
-        notes.innerText = `Deleted ${node.firstElementChild.innerText} from position ${removeIdx}`;
+        notes.innerText = `Removed ${node.firstElementChild.innerText} from Queue`;
         node.remove();
         clearInterval(intervalId);
-        getPosition[1].disabled = false;
-        getPosition[1].value = '';
-        enableButtons(deleteBtns);
+        enableButtons(operationBtns);
         return;
       }
       count++;          
@@ -342,7 +251,7 @@ function removeElem(removeIdx) {
 function searchElem(keyValue) {  
   const notes = document.querySelector('.notes');
   if(nodes.length === 2){
-    notes.innerText = `Linked list is empty`;
+    notes.innerText = `Queue is empty`;
     getKey.value = '';
     return;
   }
@@ -391,8 +300,8 @@ function clearList() {
   disableButtons(createBtns);
   getMultipleData.disabled = true;
   document.querySelector('.notes').innerText = '';
-  const dllNodes = nodes[0].parentElement;
-  const nodeContainer = dllNodes.parentElement;
+  const queueNodes = nodes[0].parentElement;
+  const nodeContainer = queueNodes.parentElement;
   nodeContainer.style.transformOrigin = '50% calc(50% - 26px)';
 
   scaleInAnimate();
@@ -403,10 +312,11 @@ function clearList() {
     const intervalId = setInterval(() => {
       if(count === turns) {
         clearInterval(intervalId);
-        dllNodes.classList.add('initial');
-        dllNodes.innerHTML = `
-          <div class="null-node">
-            <div class="data" id="prev-null">Null</div>
+        document.querySelector('.front-node').removeAttribute('style');
+        queueNodes.innerHTML = `
+          <div class="rear-node">
+            <div class="data" id="rear">Rear</div>
+            <img class="pointer" src="images/pointer.svg" alt=" > ">
           </div>
           <div class="null-node">
             <div class="data" id="next-null">Null</div>
@@ -416,7 +326,7 @@ function clearList() {
         return;
       }
       count++;
-      nodeContainer.style.transform = `scaleY(${1 -(count * (1 / turns))})`;
+      nodeContainer.style.transform = `scaleY(${1 - (count * (1 / turns))})`;
     }, 10);
   }
 
@@ -441,22 +351,19 @@ function userDefinedList(csv) {
   disableButtons(createBtns);
   getMultipleData.disabled = true;
   document.querySelector('.notes').innerText = '';
-  const dllNodes = nodes[0].parentElement;
-  const nodeContainer = dllNodes.parentElement;
+  const queueNodes = nodes[0].parentElement;
+  const nodeContainer = queueNodes.parentElement;
   nodeContainer.style.transformOrigin = '50% calc(50% - 26px)';
 
   const datas = Array.from(csv.matchAll(/\d+/g), matchArray => parseInt(matchArray[0]));
   let nodesHtml = '';
   for(let i = 0; i < datas.length; i++)
     nodesHtml += `
-      <div class="node">
-        <div class="data">${datas[i]}</div>
-        <div class="position">pos ${i + 1}</div>
-        <div class="pointer-container">
-          <img class="prev-pointer" src="images/prev.svg" alt=">">
-          <img class="next-pointer" src="images/next.svg" alt=">">
-        </div>
-      </div>
+    <div class="node">
+      <div class="data">${datas[i]}</div>
+      <div class="position">pos ${i + 1}</div>
+      <img class="pointer" src="images/pointer.svg" alt=">">
+    </div>
     `;
 
   scaleInAnimate();
@@ -467,11 +374,12 @@ function userDefinedList(csv) {
     const intervalId = setInterval(() => {
       if(count === turns) {
         clearInterval(intervalId);
-        if(dllNodes.classList.contains('initial'))
-          dllNodes.classList.remove('initial');
-        dllNodes.innerHTML = `
-          <div class="null-node null-margin-right">
-            <div class="data" id="prev-null">Null</div>
+        document.querySelector('.front-node')
+          .style.width = ((datas.length * NODE_WIDTH) + DATA_WIDTH) + 'px'; 
+        queueNodes.innerHTML = `
+          <div class="rear-node">
+            <div class="data" id="rear">Rear</div>
+            <img class="pointer" src="images/pointer.svg" alt=" > ">
           </div>
           ${nodesHtml}
           <div class="null-node">

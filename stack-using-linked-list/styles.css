@@ -134,7 +134,7 @@ body {
   background-color: white;
   color: black;
   height: 1.5rem;
-  width: 130px;
+  width: 110px;
   border-radius: 2px;
   padding-left: 4px;
   cursor: pointer;
@@ -150,19 +150,13 @@ body {
   display: none;
 }
 
-#push-pop-peek,
-#search,
-#create {
-  width: 100%;
-}
-
 .displayBlock {
   display: block;
 }
 
 .operation-menu {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: stretch;
   gap: 13px;
 }
