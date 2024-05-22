@@ -108,6 +108,8 @@ function showOperations(option) {
 }
 
 function allowOnlyNumber(event, lowerLimit, upperLimit) {
+  if(event.inputType === 'deleteContentBackward')
+    return;
   const data = parseInt(event.data);
   let value = event.target.value;
   if(!Number.isInteger(data) || parseInt(value) < lowerLimit || parseInt(value) >= upperLimit) {
@@ -116,6 +118,8 @@ function allowOnlyNumber(event, lowerLimit, upperLimit) {
 }
 
 function allowCommaSeparatedValues(event, lowerLimit, upperLimit) {
+  if(event.inputType === 'deleteContentBackward')
+    return;
   const str = event.target.value;
   if(event.data === ',') {
     if(str.length === 1 || str.charAt(str.length - 2) === ',')
