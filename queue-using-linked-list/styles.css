@@ -30,7 +30,7 @@ body {
 
 .title {
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  font-size: clamp(36px, 6vw, 64px);
+  font-size: clamp(35px, 6vw, 64px);
   font-weight: bold;
   text-align: center;
   margin-top: 8px;

@@ -13,6 +13,7 @@ optionMenu.addEventListener('change', event => {
 
 // input fields
 const getData = document.querySelector('.get-data');
+getData.ariaPlaceholder = 'hello';
 getData.addEventListener('input', (event) => {
   allowOnlyNumber(event, 1, 100);
 });

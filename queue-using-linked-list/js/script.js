@@ -143,7 +143,31 @@ function removeElem(removeIdx) {
   disableButtons(operationBtns);
   const node = nodes[removeIdx];
 
-  moveDownAnimation();
+  highlightNodeAnimation();
+
+  function highlightNodeAnimation() {
+    const turns = 50;
+    let count = 0;
+    let pos = 1;
+    const intervalId = setInterval(() => {
+      if(pos === removeIdx + 1) {
+        clearInterval(intervalId);
+        moveDownAnimation();
+        return;
+      } else if(count === turns) {
+        count = 0;
+        pos++;
+        return;
+      }
+      count++;
+      let outline;
+      if(count <= (turns / 2))
+        outline = count * (OUTLINE / turns);
+      else
+        outline = OUTLINE - (count * (OUTLINE / turns));
+      nodes[pos].firstElementChild.style.outlineWidth = outline + 'px';
+    }, 10);
+  }
 
   function moveDownAnimation() {
     const prev = node.previousElementSibling;
