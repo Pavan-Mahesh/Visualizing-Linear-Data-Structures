@@ -118,6 +118,7 @@ function addElem(addIdx) {
         prev.lastElementChild.removeAttribute('style');
         getData.disabled = false;
         getData.value = '';
+        getData.placeholder = 'Data (ex: ' + Math.floor(Math.random() * 100) + ')';
         enableButtons(operationBtns);
         return;
       }
@@ -292,6 +293,7 @@ function searchElem(keyValue) {
       notes.innerHTML = `Key: ${keyValue} is not found`;
       enableButtons(searchBtns);
       getKey.value = '';
+      getKey.placeholder = 'Key (ex: ' + Math.floor(Math.random() * 100) + ')';
       getKey.disabled = false;
       return;
     } else if(count === turns) {
@@ -300,6 +302,7 @@ function searchElem(keyValue) {
         notes.innerHTML = `Key: ${keyValue} is found at position ${pos}`; 
         enableButtons(searchBtns);
         getKey.value = '';
+        getKey.placeholder = 'Key (ex: ' + Math.floor(Math.random() * 100) + ')';
         getKey.disabled = false;
         return;
       }
