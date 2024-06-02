@@ -13,11 +13,13 @@ optionMenu.addEventListener('change', event => {
 
 // input fields
 const getData = document.querySelector('.get-data');
+getData.placeholder = 'Data (ex: ' + (Math.floor(Math.random() * (100 - 1)) + 1) + ')';
 getData.addEventListener('input', (event) => {
   allowOnlyNumber(event, 1, 100);
 });
 
 const getKey = document.querySelector('.get-key');
+getKey.placeholder = 'ex: ' + (Math.floor(Math.random() * (100 - 1)) + 1);
 getKey.addEventListener('input', (event) => {
   allowOnlyNumber(event, 1, 100); // position for deletion
 });
@@ -31,8 +33,7 @@ getMultipleData.addEventListener('input', (event) => {
 // buttons
 const operationBtns = document.querySelectorAll('#push-pop button');
 operationBtns[0].addEventListener('click', () => {
-  if(getData.value !== '')
-    addElem(1);
+  addElem(1);
 });
 operationBtns[1].addEventListener('click', () => {
   removeElem(1);
@@ -40,8 +41,7 @@ operationBtns[1].addEventListener('click', () => {
 
 const searchBtns = document.querySelectorAll('#search button');
 searchBtns[0].addEventListener('click', () => {
-  if(getKey.value !== '')  
-    searchElem(getKey.value);
+  searchElem(getKey.value);
 });
 
 const createBtns = document.querySelectorAll('#create button');

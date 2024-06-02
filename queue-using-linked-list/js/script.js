@@ -5,6 +5,11 @@ const ROTATE = 36;
 const OUTLINE = 20;
 
 function addElem(addIdx) {
+  if(getData.value === '') {
+    const placeholder = getData.placeholder;
+    getData.value = placeholder.match(/\d+/)[0];
+  }
+
   const notes = document.querySelector('.notes');
   notes.innerText = `Adding node to Queue`;
 
@@ -93,7 +98,6 @@ function addElem(addIdx) {
         clearInterval(intervalId);
         node.children[1].innerText = `pos ${addIdx}`;
         for(let i = addIdx + 1; i < nodes.length - 1; i++) {
-          console.log(nodes[i]);
           nodes[i].children[1].innerText = `pos ${i}`;
         }
         setTimeout(moveUpAnimation, 300);
@@ -118,7 +122,7 @@ function addElem(addIdx) {
         prev.lastElementChild.removeAttribute('style');
         getData.disabled = false;
         getData.value = '';
-        getData.placeholder = 'Data (ex: ' + Math.floor(Math.random() * 100) + ')';
+        getData.placeholder = 'Data (ex: ' + (Math.floor(Math.random() * (100 - 1)) + 1) + ')';
         enableButtons(operationBtns);
         return;
       }
@@ -274,6 +278,12 @@ function removeElem(removeIdx) {
 }
 
 function searchElem(keyValue) {  
+  if(keyValue === '') {
+    const placeholder = getKey.placeholder;
+    keyValue = parseInt(placeholder.match(/\d+/)[0]);
+    getKey.value = keyValue;
+  }
+
   const notes = document.querySelector('.notes');
   if(nodes.length === 2){
     notes.innerText = `Queue is empty`;
@@ -293,7 +303,7 @@ function searchElem(keyValue) {
       notes.innerHTML = `Key: ${keyValue} is not found`;
       enableButtons(searchBtns);
       getKey.value = '';
-      getKey.placeholder = 'Key (ex: ' + Math.floor(Math.random() * 100) + ')';
+      getKey.placeholder = 'ex: ' + (Math.floor(Math.random() * (100 - 1)) + 1);
       getKey.disabled = false;
       return;
     } else if(count === turns) {
@@ -302,7 +312,7 @@ function searchElem(keyValue) {
         notes.innerHTML = `Key: ${keyValue} is found at position ${pos}`; 
         enableButtons(searchBtns);
         getKey.value = '';
-        getKey.placeholder = 'Key (ex: ' + Math.floor(Math.random() * 100) + ')';
+        getKey.placeholder = 'ex: ' + (Math.floor(Math.random() * (100 - 1)) + 1);
         getKey.disabled = false;
         return;
       }

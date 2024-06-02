@@ -5,6 +5,16 @@ const ROTATE = 36;
 const OUTLINE = 20;
 
 function addElem(addIdx) {
+  if(getData.value === '') {
+    const placeholder = getData.placeholder;
+    getData.value = placeholder.match(/\d+/)[0];
+  }
+
+  if(isNaN(addIdx)) {
+    const placeholder = getPosition[0].placeholder;
+    addIdx = parseInt(placeholder.match(/\d+/)[0]);
+  }
+    
   const notes = document.querySelector('.notes');
   notes.innerText = `Inserting node at position ${addIdx}`;
 
@@ -128,8 +138,10 @@ function addElem(addIdx) {
         node.lastElementChild.removeAttribute('style');
         getData.disabled = false;
         getData.value = '';
+        getData.placeholder = 'ex: ' + (Math.floor(Math.random() * (100 - 1)) + 1);
         getPosition[0].disabled = false;
         getPosition[0].value = '';
+        getPosition[0].placeholder = 'Position (ex: ' + (Math.floor(Math.random() * (nodes.length - 1)) + 1) + ')';
         enableButtons(insertBtns);
         return;
       }
@@ -145,6 +157,11 @@ function addElem(addIdx) {
 }
 
 function removeElem(removeIdx) {
+  if(isNaN(removeIdx)) {
+    const placeholder = getPosition[1].placeholder;
+    removeIdx = parseInt(placeholder.match(/\d+/)[0]);
+  }
+
   const notes = document.querySelector('.notes');
   if(nodes.length === 2){
     notes.innerText = `Linked list is empty`;
@@ -264,6 +281,7 @@ function removeElem(removeIdx) {
         clearInterval(intervalId);
         getPosition[1].disabled = false;
         getPosition[1].value = '';
+        getPosition[1].placeholder = 'Position (ex: ' + (Math.floor(Math.random() * (nodes.length - 1 - 1)) + 1) + ')';
         enableButtons(deleteBtns);
         return;
       }
@@ -274,6 +292,12 @@ function removeElem(removeIdx) {
 }
 
 function searchElem(keyValue) {  
+  if(keyValue === '') {
+    const placeholder = getKey.placeholder;
+    keyValue = placeholder.match(/\d+/)[0];
+    getKey.value = keyValue;
+  }
+
   const notes = document.querySelector('.notes');
   if(nodes.length === 2){
     notes.innerText = `Linked list is empty`;
@@ -293,6 +317,7 @@ function searchElem(keyValue) {
       notes.innerHTML = `Key: ${keyValue} is not found`;
       enableButtons(searchBtns);
       getKey.value = '';
+      getKey.placeholder = 'ex: ' + (Math.floor(Math.random() * (100 - 1)) + 1);
       getKey.disabled = false;
       return;
     } else if(count === turns) {
@@ -301,6 +326,7 @@ function searchElem(keyValue) {
         notes.innerHTML = `Key: ${keyValue} is found at position ${pos}`; 
         enableButtons(searchBtns);
         getKey.value = '';
+        getKey.placeholder = 'ex: ' + (Math.floor(Math.random() * (100 - 1)) + 1);
         getKey.disabled = false;
         return;
       }

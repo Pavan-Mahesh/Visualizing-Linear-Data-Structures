@@ -5,6 +5,11 @@ const ROTATE = 36;
 const OUTLINE = 20;
 
 function addElem(addIdx) {
+  if(getData.value === '') {
+    const placeholder = getData.placeholder;
+    getData.value = placeholder.match(/\d+/)[0];
+  }
+
   const notes = document.querySelector('.notes');
   notes.innerText = `Adding node to Stack`;
 
@@ -100,8 +105,9 @@ function addElem(addIdx) {
         top.lastElementChild.removeAttribute('style');
         node.removeAttribute('style');
         node.lastElementChild.removeAttribute('style');
-        getData.disabled = false;
         getData.value = '';
+        getData.placeholder = 'Data ex(' + (Math.floor(Math.random() * (100 - 1) + 1)) + ')';
+        getData.disabled = false;
         enableButtons(operationBtns);
         return;
       }
@@ -218,6 +224,12 @@ function removeElem(removeIdx) {
 }
 
 function searchElem(keyValue) {  
+  if(getKey.value === '') {
+    const placeholder = getKey.placeholder;
+    keyValue = placeholder.match(/\d+/)[0];
+    getKey.value = keyValue;
+  }
+
   const notes = document.querySelector('.notes');
   if(nodes.length === 2){
     notes.innerText = `Stack is empty`;
@@ -237,6 +249,7 @@ function searchElem(keyValue) {
       notes.innerHTML = `Key: ${keyValue} is not found`;
       enableButtons(searchBtns);
       getKey.value = '';
+      getKey.placeholder = 'ex: ' + (Math.floor(Math.random() * (100 - 1) + 1));
       getKey.disabled = false;
       return;
     } else if(count === turns) {
@@ -245,6 +258,7 @@ function searchElem(keyValue) {
         notes.innerHTML = `Key: ${keyValue} is found at position ${pos}`; 
         enableButtons(searchBtns);
         getKey.value = '';
+        getKey.placeholder = 'ex: ' + (Math.floor(Math.random() * (100 - 1) + 1));
         getKey.disabled = false;
         return;
       }

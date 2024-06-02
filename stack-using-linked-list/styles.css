@@ -16,6 +16,10 @@ body {
   height: 100vh;
 }
 
+input:focus {
+  background-color: white;
+}
+
 .container {
   height: 100%;
   display: flex;
@@ -126,6 +130,7 @@ body {
 .options-container {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   margin-bottom: 16px;
 }
@@ -166,6 +171,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  margin-top: 2px;
 }
 
 .operation-menu button {
@@ -183,17 +189,19 @@ body {
 .get-data,
 .get-key,
 .get-multiple-data {
-  background-color: white;
+  background-color: rgb(240, 240, 240);
   color: black;
-  border: none;
   border-radius: 2px;
   height: 1.5rem;
   padding: 0 8px;
   cursor: pointer;
+  border: 1px solid white;
+  box-shadow: inset 0px 0px 3px black;
+  box-sizing: border-box;
 }
 
 .get-data {
-  width: 90px;
+  width: 120px;
 }
 
 .input-field {
@@ -202,7 +210,7 @@ body {
 }
 
 .get-key {
-  width: 75px;
+  width: 65px;
 }
 
 .get-multiple-data {
@@ -214,7 +222,6 @@ body {
 .get-multiple-data {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
-  border-right: 1px solid black;
 }
 
 .push-operation {
@@ -224,6 +231,10 @@ body {
 .push-button {
   border-top-left-radius: 0 !important;
   border-bottom-left-radius: 0 !important;
+}
+
+.search-label {
+  margin-right: 12px;
 }
 
 .confirm-button {

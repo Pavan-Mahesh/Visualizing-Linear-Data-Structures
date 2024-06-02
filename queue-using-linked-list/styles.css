@@ -18,6 +18,10 @@ body {
   height: 100vh;
 }
 
+input:focus{
+  background-color: white;
+}
+
 .container {
   height: 100%;
   display: flex;
@@ -163,6 +167,7 @@ body {
 
 .options-container {
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 10px;
   margin-bottom: 16px;
@@ -208,6 +213,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  margin-top: 2px;
 }
 
 .operation-menu button {
@@ -226,7 +232,6 @@ body {
 .get-multiple-data {
   background-color: rgb(240, 240, 240);
   color: black;
-  border: none;
   border-radius: 2px;
   height: 1.5rem;
   padding: 0 8px;
@@ -236,14 +241,17 @@ body {
   box-sizing: border-box;
 }
 
-.get-data,
-.get-key {
+.get-data {
   width: 120px;
 }
 
 .input-field {
   display: flex;
   align-items: center;
+}
+
+.get-key {
+  width: 65px;
 }
 
 .get-multiple-data {
@@ -264,6 +272,10 @@ body {
 .enqueue-button {
   border-top-left-radius: 0 !important;
   border-bottom-left-radius: 0 !important;
+}
+
+.search-label {
+  margin-right: 12px;
 }
 
 .confirm-button {
