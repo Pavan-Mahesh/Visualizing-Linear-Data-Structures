@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Spline+Sans+Mono:ital,wght@0,300..700;1,300..700&display=swap');
-
 :root {
   --data-width: 54px;
   --pointer-width: 30px;
@@ -7,7 +5,7 @@
 }
 
 * {
-  font-family: 'Spline Sans Mono';
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   margin: 0;
 }
 
@@ -263,7 +261,7 @@ input:focus {
 
 .get-data,
 .get-key {
-  width: 65px;
+  width: 60px;
 }
 
 .input-field {
@@ -272,7 +270,7 @@ input:focus {
 }
 
 .get-position {
-  width: 152px;
+  width: 125px;
 }
 
 .get-multiple-data {
