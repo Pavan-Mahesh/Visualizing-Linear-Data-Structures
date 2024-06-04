@@ -278,18 +278,19 @@ function removeElem(removeIdx) {
 }
 
 function searchElem(keyValue) {  
-  if(keyValue === '') {
-    const placeholder = getKey.placeholder;
-    keyValue = parseInt(placeholder.match(/\d+/)[0]);
-    getKey.value = keyValue;
-  }
-
   const notes = document.querySelector('.notes');
   if(nodes.length === 2){
     notes.innerText = `Queue is empty`;
     getKey.value = '';
     return;
   }
+  
+  if(keyValue === '') {
+    const placeholder = getKey.placeholder;
+    keyValue = placeholder.match(/\d+/)[0];
+    getKey.value = keyValue;
+  }
+
   notes.innerText = `Searching for key: ${getKey.value}`;
 
   getKey.disabled = true;

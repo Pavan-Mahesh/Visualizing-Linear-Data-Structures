@@ -142,6 +142,7 @@ function addElem(addIdx) {
         getPosition[0].disabled = false;
         getPosition[0].value = '';
         getPosition[0].placeholder = 'Position (ex: ' + (Math.floor(Math.random() * (nodes.length - 1)) + 1) + ')';
+        getPosition[1].placeholder = 'Position (ex: ' + (Math.floor(Math.random() * (nodes.length - 1 - 1)) + 1) + ')';
         enableButtons(insertBtns);
         return;
       }
@@ -281,6 +282,7 @@ function removeElem(removeIdx) {
         clearInterval(intervalId);
         getPosition[1].disabled = false;
         getPosition[1].value = '';
+        getPosition[0].placeholder = 'Position (ex: ' + (Math.floor(Math.random() * (nodes.length - 1)) + 1) + ')';
         getPosition[1].placeholder = 'Position (ex: ' + (Math.floor(Math.random() * (nodes.length - 1 - 1)) + 1) + ')';
         enableButtons(deleteBtns);
         return;
@@ -292,18 +294,19 @@ function removeElem(removeIdx) {
 }
 
 function searchElem(keyValue) {  
-  if(keyValue === '') {
-    const placeholder = getKey.placeholder;
-    keyValue = placeholder.match(/\d+/)[0];
-    getKey.value = keyValue;
-  }
-
   const notes = document.querySelector('.notes');
   if(nodes.length === 2){
     notes.innerText = `Linked list is empty`;
     getKey.value = '';
     return;
   }
+
+  if(keyValue === '') {
+    const placeholder = getKey.placeholder;
+    keyValue = placeholder.match(/\d+/)[0];
+    getKey.value = keyValue;
+  }
+
   notes.innerText = `Searching for key: ${getKey.value}`;
 
   getKey.disabled = true;
@@ -385,6 +388,8 @@ function clearList() {
         clearInterval(intervalId);
         nodeContainer.removeAttribute('style');
         getMultipleData.disabled = false;
+        getPosition[0].placeholder = 'Position (ex: ' + (Math.floor(Math.random() * (nodes.length - 1)) + 1) + ')';
+        getPosition[1].placeholder = 'Position (ex: ' + (Math.floor(Math.random() * (nodes.length - 1 - 1)) + 1) + ')';
         enableButtons(createBtns);
         return;
       }
@@ -446,6 +451,8 @@ function userDefinedList(csv) {
         nodeContainer.removeAttribute('style');
         getMultipleData.value = '';
         getMultipleData.disabled = false;
+        getPosition[0].placeholder = 'Position (ex: ' + (Math.floor(Math.random() * (nodes.length - 1)) + 1) + ')';
+        getPosition[1].placeholder = 'Position (ex: ' + (Math.floor(Math.random() * (nodes.length - 1 - 1)) + 1) + ')';
         enableButtons(createBtns);
         return;
       }

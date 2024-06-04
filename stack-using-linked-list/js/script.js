@@ -106,7 +106,7 @@ function addElem(addIdx) {
         node.removeAttribute('style');
         node.lastElementChild.removeAttribute('style');
         getData.value = '';
-        getData.placeholder = 'Data ex(' + (Math.floor(Math.random() * (100 - 1) + 1)) + ')';
+        getData.placeholder = 'Data (ex: ' + (Math.floor(Math.random() * (100 - 1) + 1)) + ')';
         getData.disabled = false;
         enableButtons(operationBtns);
         return;
@@ -224,18 +224,19 @@ function removeElem(removeIdx) {
 }
 
 function searchElem(keyValue) {  
-  if(getKey.value === '') {
-    const placeholder = getKey.placeholder;
-    keyValue = placeholder.match(/\d+/)[0];
-    getKey.value = keyValue;
-  }
-
   const notes = document.querySelector('.notes');
   if(nodes.length === 2){
     notes.innerText = `Stack is empty`;
     getKey.value = '';
     return;
   }
+
+  if(getKey.value === '') {
+    const placeholder = getKey.placeholder;
+    keyValue = placeholder.match(/\d+/)[0];
+    getKey.value = keyValue;
+  }
+
   notes.innerText = `Searching for key: ${getKey.value}`;
 
   getKey.disabled = true;

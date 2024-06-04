@@ -3,30 +3,45 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visulizing Queue Using Linked List</title>
+    <title>Visulizing Stack Using Array</title>
 
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <div class="container">
       <p class="title">
-        Queue Using Linked List
+        Stack Using Array
       </p>
 
-      <div class="queue-list">
-        <div class="node-container">
-          <div class="front-node">
-            <div class="data" id="front">Front</div>
-            <img class="pointer" src="images/pointer.svg" alt=" > ">
+      <div class="stack-list">
+        <div class="array-container">
+          <div id="top-container">
+            <div>Top</div>
           </div>
-          <div class="queue-nodes">
-            <div class="rear-node">
-              <div class="data" id="rear">Rear</div>
-              <img class="pointer" src="images/pointer.svg" alt=" > ">
+          <div class="array">
+            <div class="elem">
+              <div class="data"></div>
+              <div class="idx">0</div>
             </div>
-            <div class="null-node">
-              <div class="data" id="next-null">Null</div>
+            <div class="elem">
+              <div class="data"></div>
+              <div class="idx">1</div>
             </div>
+            <div class="elem">
+              <div class="data"></div>
+              <div class="idx">2</div>
+            </div>
+            <div class="elem">
+              <div class="data"></div>
+              <div class="idx">3</div>
+            </div>
+            <div class="elem">
+              <div class="data"></div>
+              <div class="idx">4</div>
+            </div>
+          </div>
+          <div id="idx-container">
+            <div>Idx</div>
           </div>
         </div>
         <div class="notes"></div>
@@ -38,7 +53,7 @@
           <select class="option-menu">
             <option id="default">-select-</option>
             <option>Create</option>
-            <option>Enqueue & Dequeue</option>
+            <option>Push & Pop</option>
             <option>Search</option>
           </select>
         </div>
@@ -46,9 +61,21 @@
         <div class="operations-container">
           <div id="create">
             <div class="operation-menu">
-              <button class="empty">Empty list</button>
+              <div class="empty-array">
+                <button class="empty-button">Empty stack</button>
+                <div class="user-input-size">
+                  <input class="get-size" type="text">
+                  <button class="confirm-button">
+                    <img class="confirm-icon" src="images/confirm.svg" alt="confirm">
+                  </button>
+                </div>
+              </div>
               <div class="user-defined-list">
                 <button class="user-defined-button">User defined</button>
+                <div class="user-input-size">
+                  <label>Size</label>
+                  <input class="get-size" type="text">
+                </div>
                 <div class="input-field">
                   <input class="get-multiple-data" type="text" placeholder="ex: 6,2,3,5">
                   <button class="confirm-button">
@@ -59,14 +86,14 @@
             </div>
           </div>
 
-          <div id="enqueue-dequeue">
+          <div id="push-pop">
             <div class="operation-menu">
-              <div class="enqueue-operation">
+              <div class="push-operation">
                 <input class="get-data" type="text">
-                <button class="enqueue-button">Enqueue</button>
+                <button class="push-button">Push</button>
               </div>
-              <div class="dequeue-operation">
-                <button class="dequeue-button">Dequeue</button>
+              <div class="pop-operation">
+                <button class="pop-button">Pop</button>
               </div>
             </div>
           </div>
@@ -74,7 +101,7 @@
           <div id="search">
             <div class="operation-menu">
               <div class="input-field">
-                <label class="search-label">Key</label>
+                <lable class="search-label">Key</lable>
                 <input class="get-key" type="text">
                 <button class="confirm-button">
                   <img class="confirm-icon" src="images/confirm.svg" alt="confirm">

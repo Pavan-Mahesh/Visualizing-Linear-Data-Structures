@@ -72,7 +72,7 @@ const createBtns = document.querySelectorAll('#create button');
 createBtns[0].addEventListener('click', () => {
   clearList();
 });
-createBtns[1].addEventListener('click', () => {
+createBtns[2].addEventListener('click', () => {
   if(getMultipleData.value === '')
     getMultipleData.value = '6,2,3,5';
   userDefinedList(getMultipleData.value);

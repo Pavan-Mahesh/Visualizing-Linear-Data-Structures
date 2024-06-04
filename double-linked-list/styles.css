@@ -228,8 +228,15 @@ input:focus {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  margin-top: 2px;
+  gap: 4px;
+}
+
+.user-defined-list .input-field {
+  visibility: hidden;
+}
+
+.user-defined-list:focus-within .input-field {
+  visibility: visible;
 }
 
 .operation-menu button {
@@ -237,11 +244,15 @@ input:focus {
   background-color: white;
   color: black;
   height: 1.5rem;
-  padding: 0 12px;
+  padding: 0 14px;
   /* border: 1px solid white; */
   border: none;
   border-radius: 2px;
   cursor: pointer;
+}
+
+.user-defined-button {
+  padding: 0 16px !important;
 }
 
 .get-data,
@@ -274,7 +285,7 @@ input:focus {
 }
 
 .get-multiple-data {
-  width: 120px
+  width: 90px
 }
 
 .get-position,
