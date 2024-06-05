@@ -261,6 +261,7 @@ input:focus {
 
 @media (max-height: 399px) {
   .container {
+    height: max-content;
     justify-content: start;
     overflow-y: scroll;
   }

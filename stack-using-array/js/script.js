@@ -282,6 +282,7 @@ function userDefinedList(csv, size) {
         getSize[1].value = '';
         getSize[1].placeholder = 'ex: ' + (Math.floor(Math.random() * (15 - 4)) + 4);
         getMultipleData.value = '';
+        getMultipleData.placeholder = 'ex: 6,2,3,5';
         getMultipleData.disabled = false;
         currentIdx = datas.length;
         enableButtons(createBtns);
