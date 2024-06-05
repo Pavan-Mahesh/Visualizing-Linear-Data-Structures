@@ -1,11 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Spline+Sans+Mono:ital,wght@0,300..700;1,300..700&display=swap');
-
 :root {
   --data-width: 54px;
+  --pointer-width: 30px;
 }
 
 * {
-  font-family: 'Spline Sans Mono';
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   margin: 0;
 }
 
@@ -14,6 +13,10 @@ body {
   color: white;
   width: 100vw;
   height: 100vh;
+}
+
+input:focus{
+  background-color: white;
 }
 
 .container {
@@ -39,7 +42,7 @@ body {
   flex-grow: 1;
   max-width: 95%;
   max-height: 55%;
-  min-height: calc(calc(3 * var(--data-width)) + 30px);
+  min-height: calc(calc(3 * var(--data-width)) + var(--pointer-width));
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -105,7 +108,7 @@ body {
 }
 
 .pointer {
-  width: 30px;
+  width: var(--pointer-width);
   z-index: 1;
 }
 
@@ -125,6 +128,7 @@ body {
 
 .options-container {
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 10px;
   margin-bottom: 16px;
@@ -150,25 +154,22 @@ body {
   display: none;
 }
 
-#insert,
-#delete,
-#search,
-#create {
-  width: 100%;
-}
-
 .displayBlock {
   display: block;
 }
 
 .operation-menu {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: stretch;
-  gap: 10px;
+  gap: 13px;
 }
 
 .user-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
   margin-bottom: 12px;
 }
 
@@ -176,37 +177,51 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 4px;
+}
+
+.user-defined-list .input-field {
+  visibility: hidden;
+}
+
+.user-defined-list:focus-within .input-field {
+  visibility: visible;
 }
 
 .operation-menu button {
   font-size: 14px;
-  flex-grow: 1;
   background-color: white;
   color: black;
   height: 1.5rem;
-  padding: 0 12px;
+  padding: 0 14px;
   /* border: 1px solid white; */
   border: none;
   border-radius: 2px;
   cursor: pointer;
 }
 
+.user-defined-button {
+  padding: 0 16px !important;
+}
+
 .get-data,
 .get-position,
 .get-key,
 .get-multiple-data {
-  background-color: white;
+  background-color: rgb(240, 240, 240);
   color: black;
-  border: none;
   border-radius: 2px;
   height: 1.5rem;
   padding: 0 8px;
   cursor: pointer;
+  border: 1px solid white;
+  box-shadow: inset 0px 0px 3px black;
+  box-sizing: border-box;
 }
 
-.get-data {
-  width: 90px;
+.get-data,
+.get-key {
+  width: 60px;
 }
 
 .input-field {
@@ -215,15 +230,11 @@ body {
 }
 
 .get-position {
-  width: 65px;
-}
-
-.get-key {
-  width: 75px;
+  width: 125px;
 }
 
 .get-multiple-data {
-  width: 120px
+  width: 90px
 }
 
 .get-position,
@@ -231,7 +242,10 @@ body {
 .get-multiple-data {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
-  border-right: 1px solid black;
+}
+
+.search-label {
+  margin-right: 12px;
 }
 
 .confirm-button {

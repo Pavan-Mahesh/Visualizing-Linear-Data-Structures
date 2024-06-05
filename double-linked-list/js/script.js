@@ -5,6 +5,16 @@ const ROTATE = 36;
 const OUTLINE = 20;
 
 function addElem(addIdx) {
+  if(getData.value === '') {
+    const placeholder = getData.placeholder;
+    getData.value = placeholder.match(/\d+/)[0];
+  }
+
+  if(isNaN(addIdx)) {
+    const placeholder = getPosition[0].placeholder;
+    addIdx = parseInt(placeholder.match(/\d+/)[0]);
+  }
+
   const notes = document.querySelector('.notes');
   notes.innerText = `Inserting node at position ${addIdx}`;
 
@@ -159,10 +169,13 @@ function addElem(addIdx) {
         node.removeAttribute('style');
         pointerContainer.firstElementChild.removeAttribute('style');
         pointerContainer.lastElementChild.removeAttribute('style');
-        getData.disabled = false;
         getData.value = '';
-        getPosition[0].disabled = false;
+        getData.placeholder = 'ex: ' + (Math.floor(Math.random() * (100 - 1)) + 1);
+        getData.disabled = false;
         getPosition[0].value = '';
+        getPosition[0].placeholder = 'Position (ex: ' + (Math.floor(Math.random() * (nodes.length - 1)) + 1) + ')';
+        getPosition[1].placeholder = 'Position (ex: ' + (Math.floor(Math.random() * (nodes.length - 1 - 1)) + 1) + ')';
+        getPosition[0].disabled = false;
         enableButtons(insertBtns);
         return;
       }
@@ -182,6 +195,11 @@ function addElem(addIdx) {
 }
 
 function removeElem(removeIdx) {
+  if(isNaN(removeIdx)) {
+    const placeholder = getPosition[1].placeholder;
+    removeIdx = parseInt(placeholder.match(/\d+/)[0]);
+  }
+
   const notes = document.querySelector('.notes');
   if(nodes.length === 2){
     notes.innerText = `Linked list is empty`;
@@ -328,8 +346,10 @@ function removeElem(removeIdx) {
         notes.innerText = `Deleted ${node.firstElementChild.innerText} from position ${removeIdx}`;
         node.remove();
         clearInterval(intervalId);
-        getPosition[1].disabled = false;
         getPosition[1].value = '';
+        getPosition[1].placeholder = 'Position (ex: ' + (Math.floor(Math.random() * (nodes.length - 1 - 1)) + 1) + ')';
+        getPosition[0].placeholder = 'Position (ex: ' + (Math.floor(Math.random() * (nodes.length - 1)) + 1) + ')';
+        getPosition[1].disabled = false;
         enableButtons(deleteBtns);
         return;
       }
@@ -339,13 +359,20 @@ function removeElem(removeIdx) {
   }
 }
 
-function searchElem(keyValue) {  
+function searchElem(keyValue) { 
   const notes = document.querySelector('.notes');
   if(nodes.length === 2){
     notes.innerText = `Linked list is empty`;
     getKey.value = '';
     return;
   }
+
+  if(keyValue === '') {
+    const placeholder = getKey.placeholder;
+    keyValue = placeholder.match(/\d+/)[0];
+    getKey.value = keyValue;
+  }
+  
   notes.innerText = `Searching for key: ${getKey.value}`;
 
   getKey.disabled = true;
@@ -359,6 +386,7 @@ function searchElem(keyValue) {
       notes.innerHTML = `Key: ${keyValue} is not found`;
       enableButtons(searchBtns);
       getKey.value = '';
+      getKey.placeholder = 'ex ' + (Math.floor(Math.random() * (100 - 1)) + 1);
       getKey.disabled = false;
       return;
     } else if(count === turns) {
@@ -367,6 +395,7 @@ function searchElem(keyValue) {
         notes.innerHTML = `Key: ${keyValue} is found at position ${pos}`; 
         enableButtons(searchBtns);
         getKey.value = '';
+        getKey.placeholder = 'ex ' + (Math.floor(Math.random() * (100 - 1)) + 1);
         getKey.disabled = false;
         return;
       }
@@ -391,8 +420,8 @@ function clearList() {
   disableButtons(createBtns);
   getMultipleData.disabled = true;
   document.querySelector('.notes').innerText = '';
-  const dllContainer = nodes[0].parentElement;
-  const nodeContainer = dllContainer.parentElement;
+  const dllNodes = nodes[0].parentElement;
+  const nodeContainer = dllNodes.parentElement;
   nodeContainer.style.transformOrigin = '50% calc(50% - 26px)';
 
   scaleInAnimate();
@@ -403,8 +432,8 @@ function clearList() {
     const intervalId = setInterval(() => {
       if(count === turns) {
         clearInterval(intervalId);
-        dllContainer.classList.add('initial');
-        dllContainer.innerHTML = `
+        dllNodes.classList.add('initial');
+        dllNodes.innerHTML = `
           <div class="null-node">
             <div class="data" id="prev-null">Null</div>
           </div>
@@ -428,6 +457,8 @@ function clearList() {
         clearInterval(intervalId);
         nodeContainer.removeAttribute('style');
         getMultipleData.disabled = false;
+        getPosition[0].placeholder = 'Position (ex: ' + (Math.floor(Math.random() * (nodes.length - 1)) + 1) + ')';
+        getPosition[1].placeholder = 'Position (ex: ' + (Math.floor(Math.random() * (nodes.length - 1 - 1)) + 1) + ')';
         enableButtons(createBtns);
         return;
       }
@@ -441,8 +472,8 @@ function userDefinedList(csv) {
   disableButtons(createBtns);
   getMultipleData.disabled = true;
   document.querySelector('.notes').innerText = '';
-  const dllContainer = nodes[0].parentElement;
-  const nodeContainer = dllContainer.parentElement;
+  const dllNodes = nodes[0].parentElement;
+  const nodeContainer = dllNodes.parentElement;
   nodeContainer.style.transformOrigin = '50% calc(50% - 26px)';
 
   const datas = Array.from(csv.matchAll(/\d+/g), matchArray => parseInt(matchArray[0]));
@@ -467,9 +498,9 @@ function userDefinedList(csv) {
     const intervalId = setInterval(() => {
       if(count === turns) {
         clearInterval(intervalId);
-        if(dllContainer.classList.contains('initial'))
-          dllContainer.classList.remove('initial');
-        dllContainer.innerHTML = `
+        if(dllNodes.classList.contains('initial'))
+          dllNodes.classList.remove('initial');
+        dllNodes.innerHTML = `
           <div class="null-node null-margin-right">
             <div class="data" id="prev-null">Null</div>
           </div>
@@ -495,6 +526,8 @@ function userDefinedList(csv) {
         nodeContainer.removeAttribute('style');
         getMultipleData.value = '';
         getMultipleData.disabled = false;
+        getPosition[0].placeholder = 'Position (ex: ' + (Math.floor(Math.random() * (nodes.length - 1)) + 1) + ')';
+        getPosition[1].placeholder = 'Position (ex: ' + (Math.floor(Math.random() * (nodes.length - 1 - 1)) + 1) + ')';
         enableButtons(createBtns);
         return;
       }

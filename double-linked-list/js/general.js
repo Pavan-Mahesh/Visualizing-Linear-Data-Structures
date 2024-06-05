@@ -13,19 +13,23 @@ optionMenu.addEventListener('change', event => {
 
 // input fields
 const getData = document.querySelector('.get-data');
+getData.placeholder = 'ex: ' + (Math.floor(Math.random() * (100 - 1)) + 1);
 getData.addEventListener('input', (event) => {
   allowOnlyNumber(event, 1, 100);
 });
 
 const getPosition = document.querySelectorAll('.get-position');
+getPosition[0].placeholder = 'Position (ex: ' + (Math.floor(Math.random() * (nodes.length - 1)) + 1) + ')';
 getPosition[0].addEventListener('input', (event) => {
   allowOnlyNumber(event, 1, nodes.length); // position for insertion
 });
+getPosition[1].placeholder = 'Position (ex: ' + (Math.floor(Math.random() * (nodes.length - 1 - 1)) + 1) + ')';
 getPosition[1].addEventListener('input', (event) => {
   allowOnlyNumber(event, 1, nodes.length - 1); // position for deletion
 });
 
 const getKey = document.querySelector('.get-key');
+getKey.placeholder = 'ex: ' + (Math.floor(Math.random() * (100 - 1)) + 1);
 getKey.addEventListener('input', (event) => {
   allowOnlyNumber(event, 1, 100); // position for deletion
 });
@@ -39,16 +43,13 @@ getMultipleData.addEventListener('input', (event) => {
 // buttons
 const insertBtns = document.querySelectorAll('#insert button');
 insertBtns[0].addEventListener('click', () => {
-  if(getData.value !== '')
-    addElem(1); // element before index 1
+  addElem(1); // element before index 1
 });
 insertBtns[1].addEventListener('click', () => {
-  if(getData.value !== '')
-    addElem(nodes.length - 1); // element before index n - 1
+  addElem(nodes.length - 1); // element before index n - 1
 });
 insertBtns[2].addEventListener('click', () => {
-  if(getData.value !== '' && getPosition[0].value !== '') 
-    addElem(parseInt(getPosition[0].value));
+  addElem(parseInt(getPosition[0].value));
 });
 
 const deleteBtns = document.querySelectorAll('#delete button');
@@ -59,21 +60,19 @@ deleteBtns[1].addEventListener('click', () => {
   removeElem(nodes.length - 2); // element at index n - 2 (before tail)
 });
 deleteBtns[2].addEventListener('click', () => {
-  if(getPosition[1].value !== '')
-    removeElem(parseInt(getPosition[1].value));
+  removeElem(parseInt(getPosition[1].value));
 });
 
 const searchBtns = document.querySelectorAll('#search button');
 searchBtns[0].addEventListener('click', () => {
-  if(getKey.value !== '')  
-    searchElem(getKey.value);
+  searchElem(getKey.value);
 });
 
 const createBtns = document.querySelectorAll('#create button');
 createBtns[0].addEventListener('click', () => {
   clearList();
 });
-createBtns[1].addEventListener('click', () => {
+createBtns[2].addEventListener('click', () => {
   if(getMultipleData.value === '')
     getMultipleData.value = '6,2,3,5';
   userDefinedList(getMultipleData.value);
@@ -108,6 +107,8 @@ function showOperations(option) {
 }
 
 function allowOnlyNumber(event, lowerLimit, upperLimit) {
+  if(event.inputType === 'deleteContentBackward')
+    return;
   const data = parseInt(event.data);
   let value = event.target.value;
   if(!Number.isInteger(data) || parseInt(value) < lowerLimit || parseInt(value) >= upperLimit) {
@@ -116,6 +117,8 @@ function allowOnlyNumber(event, lowerLimit, upperLimit) {
 }
 
 function allowCommaSeparatedValues(event, lowerLimit, upperLimit) {
+  if(event.inputType === 'deleteContentBackward')
+    return;
   const str = event.target.value;
   if(event.data === ',') {
     if(str.length === 1 || str.charAt(str.length - 2) === ',')
