@@ -1,13 +1,13 @@
 const ELEM_WIDTH = 58.28;
 const SCALE = 0.35;
 
-let currentIdx = 0;
+let insertCurrentIdx = 0, removeCurrentIdx = 0;
 
 function addElem() {
   const notes = document.querySelector('.notes');
   
-  if(currentIdx === nodes.length) {
-    notes.innerText = `Stack is full`;
+  if(insertCurrentIdx === nodes.length) {
+    notes.innerText = `Queue is full`;
     return;
   }
 
@@ -16,17 +16,17 @@ function addElem() {
     getData.value = placeholder.match(/\d+/)[0];
   }
 
-  notes.innerText = `Adding element to Stack`;
+  notes.innerText = `Adding element to Queue`;
   getData.disabled = true;
   disableButtons(operationBtns);
-  const node = nodes[currentIdx];
+  const node = nodes[insertCurrentIdx];
   node.firstElementChild.innerText = getData.value;
 
-  moveTopAnimation();
+  moveRearAnimation();
 
-  function moveTopAnimation() {
-    const topContiner = document.querySelector('#top-container');
-    const initialWidth = topContiner.getBoundingClientRect().width;
+  function moveRearAnimation() {
+    const rearContiner = document.querySelector('#rear-container');
+    const initialWidth = rearContiner.getBoundingClientRect().width;
     const turns = 20;
     let count = 0;
     const intervalId = setInterval(() => {
@@ -36,7 +36,7 @@ function addElem() {
         return;
       }
       count++;
-      topContiner.style.width = (initialWidth + (count * (ELEM_WIDTH / turns))) + 'px';
+      rearContiner.style.width = (initialWidth + (count * (ELEM_WIDTH / turns))) + 'px';
     }, 10);
   }
   
@@ -46,8 +46,8 @@ function addElem() {
     const intervalId = setInterval(() => {
       if(count === turns){
         clearInterval(intervalId);
-        notes.innerText = `Added ${getData.value} to Stack`;
-        currentIdx++;
+        notes.innerText = `Added ${getData.value} to Queue`;
+        insertCurrentIdx++;
         getData.value = '';
         getData.placeholder = 'Data (ex: ' + (Math.floor(Math.random() * (100 - 1) + 1)) + ')';
         getData.disabled = false;
@@ -62,14 +62,14 @@ function addElem() {
 
 function removeElem() {
   const notes = document.querySelector('.notes');
-  if(currentIdx === 0){
-    notes.innerText = `Stack is empty`;
+  if(insertCurrentIdx === 0){
+    notes.innerText = `Queue is empty`;
     return;
   }
-  notes.innerText = `Removing node from Stack`;
+  notes.innerText = `Removing node from Queue`;
 
   disableButtons(operationBtns);
-  const node = nodes[currentIdx - 1];
+  const node = nodes[removeCurrentIdx];
 
   scaleOutAnimation();
 
@@ -79,7 +79,7 @@ function removeElem() {
     const intervalId = setInterval(() => {
       if(count === turns){
         clearInterval(intervalId);
-        moveTopAnimation();
+        moveFrontAnimation();
         return;
       }
       count++;
@@ -87,29 +87,49 @@ function removeElem() {
     }, 10);
   }
 
-  function moveTopAnimation() {
-    const topContiner = document.querySelector('#top-container');
-    const initialWidth = topContiner.getBoundingClientRect().width;
+  function moveFrontAnimation() {
+    const frontContainer = document.querySelector('#front-container');
+    const initialWidth = frontContainer.getBoundingClientRect().width;
     const turns = 20;
     let count = 0;
     const intervalId = setInterval(() => {
       if(count === turns) {
         clearInterval(intervalId);
-        notes.innerText = `Removed ${node.firstElementChild.innerText} from Stack`;
-        currentIdx--;
+        notes.innerText = `Removed ${node.firstElementChild.innerText} from Queue`;
+        removeCurrentIdx++;
+        if(removeCurrentIdx === insertCurrentIdx)
+          setTimeout(resetRearAndFront, 100);
         enableButtons(operationBtns);
         return;
       }
       count++;
-      topContiner.style.width = (initialWidth - (count * (ELEM_WIDTH / turns))) + 'px';
+      frontContainer.style.width = (initialWidth + (count * (ELEM_WIDTH / turns))) + 'px';
     }, 10);
+  }
+
+  function resetRearAndFront() {
+    const turns = 25;
+    let count = 0;
+    const rearContainer = document.querySelector('#rear-container');
+    const frontContainer = document.querySelector('#front-container');
+    const toRemoveWidth = rearContainer.getBoundingClientRect().width - 58;
+    const intervalId = setInterval(() => {
+      if(count === turns) {
+        clearInterval(intervalId);
+        insertCurrentIdx = removeCurrentIdx = 0;
+        return;
+      }
+      count++;
+      rearContainer.style.width = (58 + (toRemoveWidth - (count * (toRemoveWidth / turns)))) + 'px';
+      frontContainer.style.width = (58 + (toRemoveWidth - (count * (toRemoveWidth / turns)))) + 'px';
+    });
   }
 }
 
 function searchElem(keyValue) {  
   const notes = document.querySelector('.notes');
-  if(currentIdx === 0){
-    notes.innerText = `Stack is empty`;
+  if(insertCurrentIdx === 0){
+    notes.innerText = `Queue is empty`;
     getKey.value = '';
     return;
   }
@@ -126,9 +146,9 @@ function searchElem(keyValue) {
   disableButtons(searchBtns);
   const turns = 50;
   let count = 0;
-  let pos = 0;
+  let pos = removeCurrentIdx;
   const intervalId = setInterval(() => {
-    if(pos === currentIdx) {
+    if(pos === insertCurrentIdx) {
       clearInterval(intervalId);
       notes.innerHTML = `Key: ${keyValue} is not found`;
       enableButtons(searchBtns);
@@ -167,7 +187,7 @@ function clearList(size) {
     getSize[0].value = size;
   }
 
-  if(currentIdx === 0 && size === nodes.length) {
+  if(insertCurrentIdx === 0 && size === nodes.length) {
     getSize[0].placeholder = 'Size (ex: ' + (Math.floor(Math.random() * (10 - 1)) + 1) + ')';
     return;
   }
@@ -194,7 +214,8 @@ function clearList(size) {
           `;
         }
         nodes[0].parentElement.innerHTML = html;
-        document.querySelector('#top-container').removeAttribute('style');
+        document.querySelector('#rear-container').removeAttribute('style');
+        document.querySelector('#front-container').removeAttribute('style');
         setTimeout(scaleOutAnimate, 100);
         return;
       }
@@ -213,7 +234,7 @@ function clearList(size) {
         getMultipleData.disabled = false;
         getSize[0].value = '';
         getSize[0].placeholder = 'Size (ex: ' + (Math.floor(Math.random() * (15 - 1)) + 1) + ')';
-        currentIdx = 0;
+        insertCurrentIdx = removeCurrentIdx = 0;
         enableButtons(createBtns);
         return;
       }
@@ -262,8 +283,8 @@ function userDefinedList(csv, size) {
       if(count === turns) {
         clearInterval(intervalId);
         nodes[0].parentElement.innerHTML = html;
-        const topContiner = document.querySelector('#top-container');
-        topContiner.style.width = ((datas.length + 1) * ELEM_WIDTH) + 'px';
+        document.querySelector('#rear-container').style.width = ((datas.length + 1) * ELEM_WIDTH) + 'px';
+        document.querySelector('#front-container').style.width = '58px';
         setTimeout(scaleOutAnimate, 100);
         return;
       }
@@ -283,7 +304,8 @@ function userDefinedList(csv, size) {
         getSize[1].placeholder = 'ex: ' + (Math.floor(Math.random() * (15 - 4)) + 4);
         getMultipleData.value = '';
         getMultipleData.disabled = false;
-        currentIdx = datas.length;
+        insertCurrentIdx = datas.length;
+        removeCurrentIdx = 0;
         enableButtons(createBtns);
         return;
       }
