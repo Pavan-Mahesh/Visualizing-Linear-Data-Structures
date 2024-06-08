@@ -47,6 +47,7 @@ input:focus {
   flex-direction: column;
   align-items: center;
   margin: 20px 0;
+  padding-bottom: 2rem;
   position: relative;
   /* border: 1px solid white; */
 }
@@ -303,8 +304,9 @@ input:focus {
   width: 16px;
 }
 
-@media (max-height: 399px) {
+@media (max-height: 428px) {
   .container {
+    height: max-content;
     justify-content: start;
     overflow-y: scroll;
   }

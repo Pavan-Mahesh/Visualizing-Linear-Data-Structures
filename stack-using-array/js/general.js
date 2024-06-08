@@ -21,6 +21,19 @@ getSize[0].addEventListener('input', (event) => {
 getSize[1].placeholder = 'ex: ' + (Math.floor(Math.random() * (15 - 4)) + 4);
 getSize[1].addEventListener('input', (event) => {
   allowOnlyNumber(event, 1, 100);
+  switch(getSize[1].value) {
+    case '1':
+      getMultipleData.placeholder = 'ex: 35';
+      break;
+    case '2':
+      getMultipleData.placeholder = 'ex: 62,35';
+      break;
+    case '3':
+      getMultipleData.placeholder = 'ex: 4,11,3';
+      break;
+    default:
+      getMultipleData.placeholder = 'ex: 6,2,3,5';
+  }
 });
 
 const getData = document.querySelector('.get-data');
@@ -61,7 +74,7 @@ createBtns[1].addEventListener('click', () => {
 });
 createBtns[3].addEventListener('click', () => {
   if(getMultipleData.value === '')
-    getMultipleData.value = '6,2,3,5';
+    getMultipleData.value = getMultipleData.placeholder;
   userDefinedList(getMultipleData.value, parseInt(getSize[1].value));
 });
 
