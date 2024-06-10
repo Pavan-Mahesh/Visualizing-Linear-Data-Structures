@@ -7,13 +7,16 @@
 * {
   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   margin: 0;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
 
 body {
   background-color: rgb(33, 33, 33);
   color: white;
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 50px);
+  margin-top: 50px;
 }
 
 input:focus{
@@ -35,7 +38,7 @@ input:focus{
   font-size: clamp(35px, 6vw, 64px);
   font-weight: bold;
   text-align: center;
-  margin-top: 8px;
+  margin-top: 12px;
 }
 
 .queue-list {
@@ -199,7 +202,7 @@ input:focus{
   display: flex;
   justify-content: center;
   align-items: stretch;
-  gap: 13px;
+  gap: 8px;
 }
 
 .user-input {
@@ -301,7 +304,7 @@ input:focus{
   width: 16px;
 }
 
-@media (max-height: 456px) {
+@media (max-height: 505px) {
   .container {
     height: max-content;
     justify-content: start;

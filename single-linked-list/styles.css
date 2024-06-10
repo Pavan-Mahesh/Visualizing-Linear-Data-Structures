@@ -6,6 +6,8 @@
 * {
   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   margin: 0;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
 
 body {
@@ -36,7 +38,7 @@ input:focus{
   font-size: clamp(36px, 6vw, 64px);
   font-weight: bold;
   text-align: center;
-  margin-top: 8px;
+  margin-top: 12px;
 }
 
 .single-linked-list {
@@ -163,7 +165,7 @@ input:focus{
   display: flex;
   justify-content: center;
   align-items: stretch;
-  gap: 13px;
+  gap: 8px;
 }
 
 .user-input {
@@ -262,7 +264,7 @@ input:focus{
   width: 16px;
 }
 
-@media (max-height: 399px) {
+@media (max-height: 450px) {
   .container {
     height: max-content;
     justify-content: start;
