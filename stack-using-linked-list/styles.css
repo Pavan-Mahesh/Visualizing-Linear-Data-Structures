@@ -11,7 +11,8 @@ body {
   background-color: rgb(33, 33, 33);
   color: white;
   width: 100vw;
-  height: 100vh;
+  height: (100vh - 50px);
+  margin-top: 50px;
 }
 
 input:focus {
@@ -34,7 +35,7 @@ input:focus {
   font-size: clamp(36px, 6vw, 64px);
   font-weight: bold;
   text-align: center;
-  margin-top: 8px;
+  margin-top: 12px;
 }
 
 .stack-list {
@@ -161,7 +162,7 @@ input:focus {
   display: flex;
   justify-content: center;
   align-items: stretch;
-  gap: 13px;
+  gap: 8px;
 }
 
 .user-defined-list {
@@ -259,7 +260,7 @@ input:focus {
   width: 16px;
 }
 
-@media (max-height: 399px) {
+@media (max-height: 450px) {
   .container {
     height: max-content;
     justify-content: start;
