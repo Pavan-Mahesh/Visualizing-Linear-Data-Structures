@@ -13,7 +13,7 @@ body {
   background-color: rgb(33, 33, 33);
   color: white;
   width: 100vw;
-  height: (100vh - 50px);
+  height: calc(100vh - 50px);
   margin-top: 50px;
 }
 
@@ -37,7 +37,7 @@ input:focus {
   font-size: clamp(36px, 6vw, 64px);
   font-weight: bold;
   text-align: center;
-  margin-top: 12px;
+  margin-top: 24px;
 }
 
 .stack-list {
@@ -262,7 +262,7 @@ input:focus {
   width: 16px;
 }
 
-@media (max-height: 450px) {
+@media (max-height: 500px) {
   .container {
     height: max-content;
     justify-content: start;

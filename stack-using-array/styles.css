@@ -38,7 +38,7 @@ input:focus {
   font-size: clamp(36px, 6vw, 64px);
   font-weight: bold;
   text-align: center;
-  margin-top: 12px;
+  margin-top: 24px;
 }
 
 .stack-list {

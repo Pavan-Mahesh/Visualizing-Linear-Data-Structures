@@ -1,3 +1,16 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #212121;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
 :root {
   --nav-height: 50px;
 }
@@ -26,7 +39,6 @@ nav {
   font-weight: bold;
   margin-right: auto;
 }
-
 
 .ds-options-container {
   height: var(--nav-height);
@@ -111,15 +123,6 @@ nav {
 
 .ds-types a:hover {
   background-color: rgb(200, 200, 200);
-}
-
-.ds-types #current {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-.ds-types #current:hover {
-  background-color: initial;
 }
 
 #sidebar-active {
