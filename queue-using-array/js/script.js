@@ -159,7 +159,7 @@ function searchElem(keyValue) {
     } else if(count === turns) {
       if(nodes[pos].firstElementChild.innerText === keyValue) {
         clearInterval(intervalId);
-        notes.innerHTML = `Key: ${keyValue} is found at position ${pos}`; 
+        notes.innerHTML = `Key: ${keyValue} is found at index ${pos}`; 
         enableButtons(searchBtns);
         getKey.value = '';
         getKey.placeholder = 'ex: ' + (Math.floor(Math.random() * (100 - 1) + 1));
