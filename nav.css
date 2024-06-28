@@ -127,6 +127,31 @@ nav {
   background-color: rgb(200, 200, 200);
 }
 
+.download {
+  height: 100%;
+  width: 100%;
+  margin: 0 24px
+}
+
+.download a{
+  height: 100%;
+  width: 100%;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  font-size: 19px;
+  text-decoration: none;
+  color: black;
+
+  transition: background-color 0.15s;
+}
+
+.download:hover {
+  background-color: rgb(220, 220, 220);
+}
+
 #sidebar-active {
   display: none;
 }
@@ -136,7 +161,7 @@ nav {
   display: none;
 }
 
-@media (max-width: 630px) {
+@media (max-width: 700px) {
   .ds-options-container {
     width: 180px;
     height: max-content;
