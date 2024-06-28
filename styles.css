@@ -1,0 +1,41 @@
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.links-grid-layout {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+
+  padding: 75px 20px 25px 20px;
+}
+
+.links-grid-layout a {
+  text-decoration: none;
+  color: black;
+  text-align: center;
+}
+
+.container {
+  flex-basis: 270px;
+  background-color: whitesmoke;
+  padding: 6px;
+  border-radius: 2px;
+}
+
+.thumbnail {
+  display: block;
+  width: 270px;
+  aspect-ratio: 16 / 9;
+
+  background-color: #212121;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 2px;
+  box-sizing: border-box;
+}
+
+.thumbnail-text {
+  padding-top: 6px
+}
