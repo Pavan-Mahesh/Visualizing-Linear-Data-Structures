@@ -88,14 +88,14 @@ input:focus{
   display: flex;
 }
 
-.front-node {
+.rear-node {
   display: flex;
   flex-direction: column;
   align-items: end;
   width: calc(var(--node-width) + var(--data-width));
 }
 
-.rear-node {
+.front-node {
   display: flex;
   align-items: center;
 }
@@ -109,11 +109,11 @@ input:focus{
   border: 2px solid white;
 }
 
-#front {
+#rear {
   font-size: 15px;
 }
 
-.front-node img {
+.rear-node img {
   position: relative;
   right: 12px;
   transform: rotateZ(90deg);

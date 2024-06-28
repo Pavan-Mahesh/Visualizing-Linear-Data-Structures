@@ -33,10 +33,10 @@ getMultipleData.addEventListener('input', (event) => {
 // buttons
 const operationBtns = document.querySelectorAll('#enqueue-dequeue button');
 operationBtns[0].addEventListener('click', () => {
-  addElem(1);
+  addElem(nodes.length - 1);
 });
 operationBtns[1].addEventListener('click', () => {
-  removeElem(nodes.length - 2);
+  removeElem(1);
 });
 
 const searchBtns = document.querySelectorAll('#search button');
