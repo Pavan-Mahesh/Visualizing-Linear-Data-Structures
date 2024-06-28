@@ -29,16 +29,19 @@ ul a {
 ul div {
   display: flex;
   align-items: center;
-  gap: 36px;
 
   margin-top: 4px;
   margin-left: 16px;
 }
 
 .download-container {
-  display: grid;
-  grid-template-rows: repeat(2, max-content);
-  grid-auto-flow: column;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
 
   margin-left: 36px;
+}
+
+.download-container * {
+  flex-basis: 200px;
 }
