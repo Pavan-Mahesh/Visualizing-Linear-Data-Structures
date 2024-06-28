@@ -42,6 +42,14 @@ nav {
   margin-right: auto;
 }
 
+.nav-title::after {
+  content: "-by pavan mahesh";
+  position: absolute;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0;
+}
+
 .ds-options-container {
   height: var(--nav-height);
   display: flex;
