@@ -37,12 +37,12 @@ ul div {
 
 .download-container {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
-  gap: 16px;
 
   margin-left: 36px;
 }
 
-.download-container * {
-  flex-basis: 200px;
+.download-container li {
+  flex-basis: 100px;
 }
